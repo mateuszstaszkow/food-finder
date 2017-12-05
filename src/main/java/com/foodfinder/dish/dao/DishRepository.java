@@ -1,6 +1,6 @@
-package com.foodfinder.food.dao;
+package com.foodfinder.dish.dao;
 
-import com.foodfinder.food.domain.entity.Dish;
+import com.foodfinder.dish.domain.entity.Dish;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

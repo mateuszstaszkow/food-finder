@@ -1,10 +1,9 @@
-package com.foodfinder.food.rest;
+package com.foodfinder.dish.rest;
 
-import com.foodfinder.food.domain.dto.DishDTO;
-import com.foodfinder.food.service.DishService;
+import com.foodfinder.dish.domain.dto.DishDTO;
+import com.foodfinder.dish.service.DishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

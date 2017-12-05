@@ -1,5 +1,6 @@
-package com.foodfinder.food.domain.dto;
+package com.foodfinder.dish.domain.dto;
 
+import com.foodfinder.food.domain.dto.ProductDTO;
 import lombok.Data;
 
 import java.util.List;

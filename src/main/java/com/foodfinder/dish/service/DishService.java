@@ -1,8 +1,8 @@
-package com.foodfinder.food.service;
+package com.foodfinder.dish.service;
 
-import com.foodfinder.food.dao.DishRepository;
-import com.foodfinder.food.domain.mapper.FoodMapper;
-import com.foodfinder.food.domain.dto.DishDTO;
+import com.foodfinder.dish.dao.DishRepository;
+import com.foodfinder.dish.domain.mapper.DishMapper;
+import com.foodfinder.dish.domain.dto.DishDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ import java.util.Optional;
 public class DishService {
 
     private final DishRepository dishRepository;
-    private final FoodMapper foodMapper;
+    private final DishMapper dishMapper;
 
     public List<DishDTO> getDishList() {
         return Optional.ofNullable(dishRepository.findAll())
-                .map(foodMapper::dishListToDto)
+                .map(dishMapper::dishListToDto)
                 .orElseThrow(NotFoundException::new);
     }
 }

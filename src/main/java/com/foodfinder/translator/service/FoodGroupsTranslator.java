@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,12 +31,20 @@ class FoodGroupsTranslator {
     private String GOOGLE_AUTH;
 
     void translate() {
+        Long start = new Date().getTime();
         List<FoodGroup> foodGroups = foodGroupRepository.findAll()
                 .stream()
                 .map(this::translateSingleGroup)
                 .collect(Collectors.toList());
 
         foodGroupRepository.save(foodGroups);
+
+        logStatus(start);
+    }
+
+    private void logStatus(Long start) {
+        Float duration = (new Date().getTime() - start) / (float) 1000;
+        log.info("Groups count:" + foodGroupRepository.count() + ", time: " + duration + " s");
     }
 
     private FoodGroup translateSingleGroup(FoodGroup foodGroup) {

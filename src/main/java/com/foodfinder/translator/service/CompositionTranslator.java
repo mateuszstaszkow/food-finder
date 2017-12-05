@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -24,6 +25,7 @@ class CompositionTranslator {
     private static final int PAGE_SIZE = 1500;
 
     void translate() {
+        Long start = new Date().getTime();
         AtomicInteger counter = new AtomicInteger(0);
         int compositionCount = (int) compositionRepository.count();
         int numberOfPages = IntMath.divide(compositionCount, PAGE_SIZE, RoundingMode.CEILING);
@@ -35,6 +37,13 @@ class CompositionTranslator {
 
                     compositionRepository.save(compositionPage);
                 });
+
+        logStatus(start);
+    }
+
+    private void logStatus(Long start) {
+        Float duration = (new Date().getTime() - start) / (float) 1000;
+        log.info("Groups count:" + compositionRepository.count() + ", time: " + duration + " s");
     }
 
     private void logCurrentProgress(AtomicInteger counter, int compositionCount) {

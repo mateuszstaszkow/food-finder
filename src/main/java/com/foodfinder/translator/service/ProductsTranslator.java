@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.RoundingMode;
 import java.net.URI;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -36,6 +37,7 @@ class ProductsTranslator {
     private static final int PAGE_SIZE = 1500;
 
     void translate() {
+        Long start = new Date().getTime();
         RestTemplate restTemplate = new RestTemplate();
         AtomicInteger counter = new AtomicInteger(0);
         int productsCount = (int) productRepository.count();
@@ -48,6 +50,13 @@ class ProductsTranslator {
 
                     productRepository.save(products);
                 });
+
+        logStatus(start);
+    }
+
+    private void logStatus(Long start) {
+        Float duration = (new Date().getTime() - start) / (float) 1000;
+        log.info("Groups count:" + productRepository.count() + ", time: " + duration + " s");
     }
 
     private Product translateSingleProduct(Product product, RestTemplate restTemplate,

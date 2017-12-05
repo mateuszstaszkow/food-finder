@@ -1,5 +1,6 @@
-package com.foodfinder.food.domain.entity;
+package com.foodfinder.dish.domain.entity;
 
+import com.foodfinder.food.domain.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

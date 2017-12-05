@@ -54,7 +54,7 @@ class FoodGroupsMigrator {
 
     private void logStatus(Long start) {
         Float duration = (new Date().getTime() - start) / (float) 1000;
-        log.info("Groups count:" + foodGroupRepository.count() + ", time: " + duration + " s");
+        log.info("Food groups migration success. Groups count:" + foodGroupRepository.count() + ", time: " + duration + " s");
     }
 
     private void migrateAllFoodGroups() {
