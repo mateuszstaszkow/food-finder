@@ -1,6 +1,6 @@
 package com.foodfinder.migrator.rest;
 
-import com.foodfinder.migrator.MigratorService;
+import com.foodfinder.migrator.service.MigratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,5 +26,11 @@ public class MigratorRestController {
     @ResponseStatus(HttpStatus.OK)
     public void migrateFoodGroups() {
         migratorService.migrateFoodGroups();
+    }
+
+    @RequestMapping(value = "/migrate/all", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public void migrateAll() {
+        migratorService.migrateAll();
     }
 }

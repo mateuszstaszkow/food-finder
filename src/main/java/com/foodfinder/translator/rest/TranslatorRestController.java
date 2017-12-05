@@ -1,6 +1,6 @@
 package com.foodfinder.translator.rest;
 
-import com.foodfinder.translator.TranslatorService;
+import com.foodfinder.translator.service.TranslatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,5 +32,11 @@ public class TranslatorRestController {
     @ResponseStatus(HttpStatus.OK)
     public void translateComposition() {
         translatorService.translateComposition();
+    }
+
+    @RequestMapping(value = "/translate/all", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public void translateAll() {
+        translatorService.translateAll();
     }
 }
