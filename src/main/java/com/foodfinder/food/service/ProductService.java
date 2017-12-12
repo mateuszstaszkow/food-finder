@@ -29,6 +29,12 @@ public class ProductService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public List<ProductDTO> getProductsLiveSearch(String name) {
+        return Optional.ofNullable(productRepository.findTop10ByNameContaining(name))
+                .map(foodMapper::productListToDto)
+                .orElseThrow(NotFoundException::new);
+    }
+
     public ProductDTO getProduct(Long id) {
         return Optional.ofNullable(productRepository.findById(id))
                 .map(foodMapper::toDto)

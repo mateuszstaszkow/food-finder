@@ -22,5 +22,7 @@ public interface FoodMapper {
 
     ProductDTO toDto(Product product);
 
-    List<ProductDTO> productListToDto(Page<Product> productList);
+    List<ProductDTO> productListToDto(Page<Product> productPage);
+
+    List<ProductDTO> productListToDto(List<Product> productList);
 }
