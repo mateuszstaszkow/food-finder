@@ -12,4 +12,5 @@ public class DishDTO {
     private String name;
     private String description;
     private List<ProductDTO> products;
+    private Long hits;
 }

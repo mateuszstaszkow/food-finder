@@ -41,6 +41,9 @@ public class Product implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private FoodGroup foodGroup;
 
+    @Column(name = "hits")
+    private Long hits;
+
     public Product setFoodGroup(FoodGroup foodGroup) {
         this.foodGroup = foodGroup;
         return this;

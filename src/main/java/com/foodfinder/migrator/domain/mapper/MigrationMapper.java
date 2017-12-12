@@ -23,7 +23,8 @@ public interface MigrationMapper {
 
     @Mappings({
             @Mapping(source = "ndbno", target = "id"),
-            @Mapping(source = "nutrients", target = "composition")
+            @Mapping(source = "nutrients", target = "composition"),
+            @Mapping(target = "hits", ignore = true)
     })
     Product toEntity(ProductResponseDTO response);
 }

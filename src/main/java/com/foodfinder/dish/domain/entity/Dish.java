@@ -29,4 +29,7 @@ public class Dish implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @Column(name = "hits")
+    private Long hits;
 }
