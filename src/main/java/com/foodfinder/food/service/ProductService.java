@@ -6,6 +6,7 @@ import com.foodfinder.food.dao.ProductRepository;
 import com.foodfinder.food.domain.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,18 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final FoodMapper foodMapper;
 
+    @Value("${food-finder.english-flag}")
+    private String englishFlag;
+
+    public List<ProductDTO> getProductList(Pageable pageable, String name, String language) {
+        if(name == null) {
+            return getProductList(pageable);
+        } else if(language == null || language.equals(englishFlag)) {
+            return getProductsLiveSearch(name);
+        }
+        return getTranslatedProductsLiveSearch(name);
+    }
+
     public List<ProductDTO> getProductList(Pageable pageable) {
         return Optional.ofNullable(productRepository.findAll(pageable))
                 .map(foodMapper::productListToDto)
@@ -31,6 +44,12 @@ public class ProductService {
 
     public List<ProductDTO> getProductsLiveSearch(String name) {
         return Optional.ofNullable(productRepository.findTop10ByNameContaining(name))
+                .map(foodMapper::productListToDto)
+                .orElseThrow(NotFoundException::new);
+    }
+
+    public List<ProductDTO> getTranslatedProductsLiveSearch(String name) {
+        return Optional.ofNullable(productRepository.findTop10ByTranslatedNameContaining(name))
                 .map(foodMapper::productListToDto)
                 .orElseThrow(NotFoundException::new);
     }

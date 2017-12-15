@@ -4,6 +4,7 @@ import com.foodfinder.food.domain.dto.ProductDTO;
 import com.foodfinder.food.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,16 @@ class ProductRestController {
 
     private final ProductService productService;
 
+    @Value("${food-finder.english-flag}")
+    private String englishFlag;
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDTO> getProductList(Pageable pageable, @RequestParam(value="name", required = false) String name) {
-        return name == null ? productService.getProductList(pageable) : productService.getProductsLiveSearch(name);
+    public List<ProductDTO> getProductList(Pageable pageable,
+                                           @RequestParam(value="name", required = false) String name,
+                                           @RequestParam(value="language", required = false) String language) {
+
+        return productService.getProductList(pageable, name, language);
     }
 
     @RequestMapping(method = RequestMethod.POST)
