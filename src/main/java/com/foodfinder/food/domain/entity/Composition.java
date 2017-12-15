@@ -31,8 +31,6 @@ public class Composition implements Serializable {
     @Column(name = "gm")
     private Float gm;
 
-    public Composition setName(String name) {
-        this.name = name;
-        return this;
-    }
+    @Column(name = "name_pl", length = 200)
+    private String translatedName;
 }

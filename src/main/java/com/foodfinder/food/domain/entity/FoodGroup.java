@@ -22,8 +22,6 @@ public class FoodGroup implements Serializable {
     @Column(name = "name", unique = true, nullable = false, length = 100)
     private String name;
 
-    public FoodGroup setName(String name) {
-        this.name = name;
-        return this;
-    }
+    @Column(name = "name_pl", length = 200)
+    private String translatedName;
 }

@@ -9,4 +9,5 @@ public class CompositionDTO {
     private String name;
     private String unit;
     private Float value;
+    private String translatedName;
 }

@@ -7,4 +7,5 @@ public class FoodGroupDTO {
 
     private Long id;
     private String name;
+    private String translatedName;
 }

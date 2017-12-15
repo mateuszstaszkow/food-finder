@@ -56,7 +56,7 @@ class ProductsTranslator {
 
     private void logStatus(Long start) {
         Float duration = (new Date().getTime() - start) / (float) 1000;
-        log.info("Groups count:" + productRepository.count() + ", time: " + duration + " s");
+        log.info("Products count:" + productRepository.count() + ", time: " + duration + " s");
     }
 
     private Product translateSingleProduct(Product product, RestTemplate restTemplate,
@@ -70,7 +70,8 @@ class ProductsTranslator {
                     .getTranslatedText();
 
             logCurrentProgress(counter, productsCount);
-            return product.setName(translation);
+            product.setTranslatedName(translation);
+            return product;
         }
         catch (RestClientException exception) {
             log.error("Google Translate REST API error", exception);

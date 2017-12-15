@@ -16,4 +16,5 @@ public class ProductDTO {
     private String shortDescription;
     private FoodGroupDTO foodGroup;
     private Long hits;
+    private String translatedName;
 }

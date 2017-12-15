@@ -43,12 +43,12 @@ class CompositionTranslator {
 
     private void logStatus(Long start) {
         Float duration = (new Date().getTime() - start) / (float) 1000;
-        log.info("Groups count:" + compositionRepository.count() + ", time: " + duration + " s");
+        log.info("Composition count:" + compositionRepository.count() + ", time: " + duration + " s");
     }
 
     private void logCurrentProgress(AtomicInteger counter, int compositionCount) {
         Float progress = 100 * counter.addAndGet(1) / (float) compositionCount;
-        log.info("Product translation progress: " + progress + " %");
+        log.info("Composition translation progress: " + progress + " %");
     }
 
     private Composition translateSingleComposition(Composition composition, AtomicInteger counter, int compositionCount) {
@@ -70,6 +70,7 @@ class CompositionTranslator {
         }
 
         logCurrentProgress(counter, compositionCount);
-        return composition.setName(translation);
+        composition.setTranslatedName(translation);
+        return composition;
     }
 }

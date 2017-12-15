@@ -55,7 +55,8 @@ class FoodGroupsTranslator {
                     .get(0)
                     .getTranslatedText();
 
-            return foodGroup.setName(translation);
+            foodGroup.setTranslatedName(translation);
+            return foodGroup;
         }
         catch (RestClientException exception) {
             log.error("Google Translate REST API error", exception);

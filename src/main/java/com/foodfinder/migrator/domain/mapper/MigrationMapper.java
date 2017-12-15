@@ -13,18 +13,21 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface MigrationMapper {
 
+    @Mapping(target = "translatedName", ignore = true)
     FoodGroup toEntity(FoodGroupResponseDTO response);
 
     @Mappings({
             @Mapping(source = "nutrient_id", target = "id"),
-            @Mapping(source = "nutrient", target = "name")
+            @Mapping(source = "nutrient", target = "name"),
+            @Mapping(target = "translatedName", ignore = true)
     })
     Composition toEntity(CompositionResponseDTO response);
 
     @Mappings({
             @Mapping(source = "ndbno", target = "id"),
             @Mapping(source = "nutrients", target = "composition"),
-            @Mapping(target = "hits", ignore = true)
+            @Mapping(target = "hits", ignore = true),
+            @Mapping(target = "translatedName", ignore = true)
     })
     Product toEntity(ProductResponseDTO response);
 }

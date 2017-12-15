@@ -44,13 +44,11 @@ public class Product implements Serializable {
     @Column(name = "hits")
     private Long hits;
 
+    @Column(name = "name_pl", length = 200)
+    private String translatedName;
+
     public Product setFoodGroup(FoodGroup foodGroup) {
         this.foodGroup = foodGroup;
-        return this;
-    }
-
-    public Product setName(String name) {
-        this.name = name;
         return this;
     }
 }
