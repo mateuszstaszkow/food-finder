@@ -47,12 +47,14 @@ dependencies {
 
     //HTTP
     compile("javax.ws.rs:javax.ws.rs-api:2.0")
+    compile("org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE")
 
     //Calculations
     compile("com.google.guava:guava:23.5-jre")
 
     //Unit tests
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("com.jayway.jsonpath:json-path")
 }
 
 compileJava {
