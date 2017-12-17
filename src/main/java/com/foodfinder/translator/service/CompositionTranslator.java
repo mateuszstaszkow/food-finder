@@ -18,13 +18,13 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-class CompositionTranslator {
+class CompositionTranslator implements Translator {
 
     private final CompositionRepository compositionRepository;
 
     private static final int PAGE_SIZE = 1500;
 
-    void translate() {
+    public void translate() {
         Long start = new Date().getTime();
         AtomicInteger counter = new AtomicInteger(0);
         int compositionCount = (int) compositionRepository.count();

@@ -1,9 +1,9 @@
 package com.foodfinder.food.service;
 
-import com.foodfinder.food.domain.mapper.FoodMapper;
-import com.foodfinder.food.domain.entity.Product;
 import com.foodfinder.food.dao.ProductRepository;
 import com.foodfinder.food.domain.dto.ProductDTO;
+import com.foodfinder.food.domain.entity.Product;
+import com.foodfinder.food.domain.mapper.FoodMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +23,9 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final FoodMapper foodMapper;
+    private final ProductsLiveSearchService liveSearchService;
+
+    private static final int LIVE_SEARCH_PAGE_SIZE = 10;
 
     @Value("${food-finder.english-flag}")
     private String englishFlag;
@@ -31,25 +34,13 @@ public class ProductService {
         if(name == null) {
             return getProductList(pageable);
         } else if(language == null || language.equals(englishFlag)) {
-            return getProductsLiveSearch(name);
+            return liveSearchService.getProducts(name, LIVE_SEARCH_PAGE_SIZE);
         }
-        return getTranslatedProductsLiveSearch(name);
+        return liveSearchService.getTranslatedProducts(name, LIVE_SEARCH_PAGE_SIZE);
     }
 
     public List<ProductDTO> getProductList(Pageable pageable) {
         return Optional.ofNullable(productRepository.findAll(pageable))
-                .map(foodMapper::productListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    public List<ProductDTO> getProductsLiveSearch(String name) {
-        return Optional.ofNullable(productRepository.findTop10ByNameContaining(name))
-                .map(foodMapper::productListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    public List<ProductDTO> getTranslatedProductsLiveSearch(String name) {
-        return Optional.ofNullable(productRepository.findTop10ByTranslatedNameContaining(name))
                 .map(foodMapper::productListToDto)
                 .orElseThrow(NotFoundException::new);
     }

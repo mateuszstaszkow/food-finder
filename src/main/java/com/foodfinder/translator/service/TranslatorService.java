@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -29,8 +31,7 @@ public class TranslatorService {
     }
 
     public void translateAll() {
-        translateFoodGroups();
-        translateProducts();
-        translateComposition();
+        Arrays.asList(foodGroupsTranslator, productsTranslator, compositionTranslator)
+                .forEach(Translator::translate);
     }
 }

@@ -41,12 +41,13 @@ dependencies {
 
     //Boilerplate generation
     compile("org.projectlombok:lombok:1.16.18")
-    apt "org.projectlombok:lombok:1.16.18"
+    apt("org.projectlombok:lombok:1.16.18")
     compile("org.mapstruct:mapstruct-jdk8:1.2.0.Final")
     apt("org.mapstruct:mapstruct-processor:1.2.0.Final")
 
     //HTTP
     compile("javax.ws.rs:javax.ws.rs-api:2.0")
+    compile("org.glassfish.jersey.core:jersey-common:2.22.2")
     compile("org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE")
 
     //Calculations

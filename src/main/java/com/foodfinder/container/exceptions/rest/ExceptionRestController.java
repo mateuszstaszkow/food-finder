@@ -15,7 +15,7 @@ public class ExceptionRestController {
     @ExceptionHandler(NotFoundException.class)
     public void handleNotFoundException() {}
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BadRequestException.class)
     public void handleBadRequestException() {}
 }

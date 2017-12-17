@@ -5,14 +5,13 @@ import com.foodfinder.food.dao.ProductRepository;
 import com.foodfinder.food.domain.entity.FoodGroup;
 import com.foodfinder.food.domain.entity.Product;
 import com.foodfinder.migrator.domain.dto.FoodGroupResponseDTO;
-import com.foodfinder.migrator.domain.mapper.MigrationMapper;
 import com.foodfinder.migrator.domain.dto.UsdaFoodResponseDTO;
+import com.foodfinder.migrator.domain.mapper.MigrationMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,13 +31,13 @@ class ProductsMigrator {
     private final MigrationMapper migrationMapper;
     private final FoodGroupRepository foodGroupRepository;
 
+    private static final int PAGE_SIZE = 1500;
+
     @Value("${usda.products.url}")
     private String FOOD_URL;
 
     @Value("${usda.auth}")
     private String USDA_AUTH;
-
-    private static final int PAGE_SIZE = 1500;
 
     void migrate(List<FoodGroupResponseDTO> foodGroups) {
         RestTemplate restTemplate = new RestTemplate();
@@ -80,6 +79,7 @@ class ProductsMigrator {
         }
     }
 
+    //TODO add more nutrients, extract ids
     private URI buildUri(String id) {
         return UriComponentsBuilder.fromUriString(FOOD_URL)
                 .queryParam("format", "json")

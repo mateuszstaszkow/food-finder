@@ -24,9 +24,11 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-class ProductsTranslator {
+class ProductsTranslator implements Translator {
 
     private final ProductRepository productRepository;
+
+    private static final int PAGE_SIZE = 1500;
 
     @Value("${google.translate.url}")
     private String TRANSLATE_URL;
@@ -34,9 +36,8 @@ class ProductsTranslator {
     @Value("${google.translate.auth}")
     private String GOOGLE_AUTH;
 
-    private static final int PAGE_SIZE = 1500;
-
-    void translate() {
+    @Override
+    public void translate() {
         Long start = new Date().getTime();
         RestTemplate restTemplate = new RestTemplate();
         AtomicInteger counter = new AtomicInteger(0);

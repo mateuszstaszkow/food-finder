@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-class FoodGroupsTranslator {
+class FoodGroupsTranslator implements Translator {
 
     private final FoodGroupRepository foodGroupRepository;
 
@@ -30,7 +30,7 @@ class FoodGroupsTranslator {
     @Value("${google.translate.auth}")
     private String GOOGLE_AUTH;
 
-    void translate() {
+    public void translate() {
         Long start = new Date().getTime();
         List<FoodGroup> foodGroups = foodGroupRepository.findAll()
                 .stream()
