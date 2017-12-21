@@ -1,4 +1,4 @@
-package com.foodfinder.user.dto;
+package com.foodfinder.user.domain.dto;
 
 import lombok.Data;
 
@@ -9,6 +9,5 @@ public class RoleDTO {
 
     private Long id;
     private String name;
-    private List<UserDTO> users;
     private List<PrivilegeDTO> privileges;
 }

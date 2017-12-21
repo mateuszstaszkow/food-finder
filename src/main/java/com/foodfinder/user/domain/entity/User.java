@@ -1,4 +1,4 @@
-package com.foodfinder.user.domain;
+package com.foodfinder.user.domain.entity;
 
 import com.foodfinder.diet.domain.Diet;
 import lombok.AllArgsConstructor;
@@ -30,10 +30,21 @@ public class User implements Serializable {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Diet> diets;
 
-    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
+
+    @Column(name = "weight")
+    private Float weight;
+
+    @Column(name = "height")
+    private Float height;
+
+    @Column(name = "age")
+    private int age;
+
+    @Column(name = "gender", length = 50)
+    private String gender;
 }

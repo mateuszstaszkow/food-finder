@@ -1,14 +1,15 @@
 package com.foodfinder.diet.domain;
 
-import com.foodfinder.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -23,8 +24,5 @@ public class Diet implements Serializable {
 
     @Column(name = "name")
     private String name;
-
-    @ManyToMany
-    private List<User> users;
 
 }

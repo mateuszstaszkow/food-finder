@@ -1,4 +1,4 @@
-package com.foodfinder.user.domain;
+package com.foodfinder.user.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity(name = "role")
-public class Role implements Serializable {
+@Entity(name = "privilege")
+public class Privilege implements Serializable {
 
     @Id
     @GeneratedValue
@@ -22,10 +21,4 @@ public class Role implements Serializable {
 
     @Column(name = "name", length = 50)
     private String name;
-
-    @OneToMany
-    private List<User> users;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Privilege> privileges;
 }
