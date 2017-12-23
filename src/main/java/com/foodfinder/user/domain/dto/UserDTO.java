@@ -16,6 +16,6 @@ public class UserDTO {
     private Float height;
     private int age;
     private String gender;
-    private List<DietDTO> diets;
+    //private List<DietDTO> diets;
     private RoleDTO role;
 }

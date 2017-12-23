@@ -1,0 +1,1 @@
+INSERT INTO `user` VALUES (1, "admin@foodfinder.com", "", "", 0, 0, 0, "", 1, "zoliborz", 1);

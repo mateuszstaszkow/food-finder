@@ -23,6 +23,6 @@ public class Role implements Serializable {
     @Column(name = "name", length = 50)
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Privilege> privileges;
 }

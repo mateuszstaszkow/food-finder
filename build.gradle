@@ -35,6 +35,7 @@ dependencies {
     //Spring related
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-security")
 
     //Database configuration
     compile("mysql:mysql-connector-java:6.0.6")
@@ -57,6 +58,7 @@ dependencies {
 
     //Unit tests
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
     testCompile("com.jayway.jsonpath:json-path")
 }
 

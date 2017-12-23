@@ -27,11 +27,17 @@ public class User implements Serializable {
     @Column(name = "surname", length = 50)
     private String surname;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false, length = 50)
     private String email;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Diet> diets;
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "enabled", nullable = false)
+    private Boolean enabled;
+
+    //@ManyToMany(cascade = CascadeType.ALL)
+    //private List<Diet> diets;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
