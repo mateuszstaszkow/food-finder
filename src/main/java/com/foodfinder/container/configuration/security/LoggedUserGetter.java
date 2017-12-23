@@ -1,4 +1,4 @@
-package com.foodfinder.container.configuration;
+package com.foodfinder.container.configuration.security;
 
 import com.foodfinder.user.dao.UserRepository;
 import com.foodfinder.user.domain.entity.User;

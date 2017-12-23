@@ -11,30 +11,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@RequestMapping("/${food-finder.prefix}")
+@RequestMapping("/${food-finder.prefix}/translate")
 public class TranslatorRestController {
 
     private final TranslatorService translatorService;
 
-    @RequestMapping(value = "/translate/groups", method = RequestMethod.POST)
+    @RequestMapping(value = "/groups", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void translateFoodGroups() {
         translatorService.translateFoodGroups();
     }
 
-    @RequestMapping(value = "/translate/products", method = RequestMethod.POST)
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void translateProducts() {
         translatorService.translateProducts();
     }
 
-    @RequestMapping(value = "/translate/composition", method = RequestMethod.POST)
+    @RequestMapping(value = "/composition", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void translateComposition() {
         translatorService.translateComposition();
     }
 
-    @RequestMapping(value = "/translate/all", method = RequestMethod.POST)
+    @RequestMapping(value = "/all", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void translateAll() {
         translatorService.translateAll();

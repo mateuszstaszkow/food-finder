@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@RequestMapping("/${food-finder.prefix}")
+@RequestMapping("/${food-finder.prefix}/diagnostics")
 class DiagnosticRestController {
 
     private final DiagnosticService diagnosticService;
 
-    @RequestMapping(value = "/diagnostic", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String getDiagnosticList() {
         return diagnosticService.getDiagnosticList();

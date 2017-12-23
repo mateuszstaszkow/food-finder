@@ -1,6 +1,7 @@
-package com.foodfinder.container.configuration;
+package com.foodfinder.container.configuration.security;
 
 import com.foodfinder.user.dao.UserRepository;
+import com.foodfinder.user.domain.entity.Privilege;
 import com.foodfinder.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Transactional
@@ -29,17 +31,20 @@ public class FoodFinderUserDetailsService implements UserDetailsService {
             if (user == null) {
                 return null;
             }
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
+            return new org.springframework.security.core.userdetails.User(user.getEmail(),
+                    user.getPassword(), getAuthorities(user.getRole().getPrivileges()));
         }
         catch (Exception e){
             throw new UsernameNotFoundException("User not found");
         }
     }
 
-    private Set<GrantedAuthority> getAuthorities(User user){
+    private Set<GrantedAuthority> getAuthorities(List<Privilege> privileges){
         Set<GrantedAuthority> authorities = new HashSet<>();
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole().getName());
-        authorities.add(grantedAuthority);
+        privileges.stream()
+                .map(Privilege::getName)
+                .map(SimpleGrantedAuthority::new)
+                .forEach(authorities::add);
         return authorities;
     }
 

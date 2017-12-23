@@ -1,4 +1,4 @@
-package com.foodfinder.container.configuration;
+package com.foodfinder.container.configuration.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

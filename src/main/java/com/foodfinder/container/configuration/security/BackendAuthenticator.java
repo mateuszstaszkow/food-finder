@@ -1,4 +1,4 @@
-package com.foodfinder.container.configuration;
+package com.foodfinder.container.configuration.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

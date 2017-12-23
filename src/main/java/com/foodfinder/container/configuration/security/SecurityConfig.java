@@ -1,4 +1,4 @@
-package com.foodfinder.container.configuration;
+package com.foodfinder.container.configuration.security;
 
 import com.foodfinder.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepository userRepository;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceBean()).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsServiceBean())
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -43,14 +44,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers("/api/users/**").hasAuthority("USER")
-                    .antMatchers("/api/products/**").hasAuthority("ADMIN")
+                    .antMatchers("/api/days/**").hasAuthority("VIEW_DAYS")
+                    .antMatchers("/api/diagntostics/**").hasAuthority("VIEW_ADMIN")
+                    .antMatchers("/api/diets/**").hasAuthority("VIEW_DIETS")
+                    .antMatchers("/api/dishes/**").hasAuthority("VIEW_DISHES")
+                    .antMatchers("/api/groups/**").hasAuthority("VIEW_GROUPS")
+                    .antMatchers("/api/products/**").hasAuthority("VIEW_PRODUCTS")
+                    .antMatchers("/api/recognize/**").hasAuthority("RECOGNIZE")
+                    .antMatchers("/api/migrate/**").hasAuthority("MIGRATE")
+                    .antMatchers("/api/translate/**").hasAuthority("TRANSLATE")
+                    .antMatchers("/api/users/**").hasAuthority("VIEW_USERS")
                 .anyRequest()
                     .authenticated()
                     .and()
                 .formLogin()
                     .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+                .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login");
     }
 
 }
