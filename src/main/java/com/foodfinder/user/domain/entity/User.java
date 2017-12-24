@@ -39,7 +39,7 @@ public class User implements Serializable {
     //@ManyToMany(cascade = CascadeType.ALL)
     //private List<Diet> diets;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Role role;
 
     @Column(name = "weight")

@@ -1,6 +1,7 @@
 package com.foodfinder.user.domain.mapper;
 
 import com.foodfinder.user.domain.dto.PrivilegeDTO;
+import com.foodfinder.user.domain.dto.RegistrationDTO;
 import com.foodfinder.user.domain.dto.RoleDTO;
 import com.foodfinder.user.domain.dto.UserDTO;
 import com.foodfinder.user.domain.entity.Privilege;
@@ -35,4 +36,6 @@ public interface UserMapper {
     PrivilegeDTO toDto(Privilege user);
 
     List<PrivilegeDTO> privilegeListToDto(Page<Privilege> productPage);
+
+    User toEntity(RegistrationDTO userDTO);
 }

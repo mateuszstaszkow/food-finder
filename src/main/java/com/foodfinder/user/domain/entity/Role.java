@@ -16,6 +16,10 @@ import java.util.List;
 @Entity(name = "role")
 public class Role implements Serializable {
 
+    public Role(Long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue
     private Long id;

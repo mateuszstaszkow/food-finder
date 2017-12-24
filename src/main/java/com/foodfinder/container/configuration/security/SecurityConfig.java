@@ -3,6 +3,7 @@ package com.foodfinder.container.configuration.security;
 import com.foodfinder.user.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,6 +21,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepository userRepository;
+
+    @Value("${food-finder.prefix}")
+    private String foodFinderPrefix;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,24 +48,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers("/api/days/**").hasAuthority("VIEW_DAYS")
-                    .antMatchers("/api/diagntostics/**").hasAuthority("VIEW_ADMIN")
-                    .antMatchers("/api/diets/**").hasAuthority("VIEW_DIETS")
-                    .antMatchers("/api/dishes/**").hasAuthority("VIEW_DISHES")
-                    .antMatchers("/api/groups/**").hasAuthority("VIEW_GROUPS")
-                    .antMatchers("/api/products/**").hasAuthority("VIEW_PRODUCTS")
-                    .antMatchers("/api/recognize/**").hasAuthority("RECOGNIZE")
-                    .antMatchers("/api/migrate/**").hasAuthority("MIGRATE")
-                    .antMatchers("/api/translate/**").hasAuthority("TRANSLATE")
-                    .antMatchers("/api/users/**").hasAuthority("VIEW_USERS")
-                .anyRequest()
-                    .authenticated()
+                    .antMatchers("/" + foodFinderPrefix + "/days/**").hasAuthority("VIEW_DAYS")
+                    .antMatchers("/" + foodFinderPrefix + "/diagntostics/**").hasAuthority("VIEW_ADMIN")
+                    .antMatchers("/" + foodFinderPrefix + "/diets/**").hasAuthority("VIEW_DIETS")
+                    .antMatchers("/" + foodFinderPrefix + "/dishes/**").hasAuthority("VIEW_DISHES")
+                    .antMatchers("/" + foodFinderPrefix + "/groups/**").hasAuthority("VIEW_GROUPS")
+                    .antMatchers("/" + foodFinderPrefix + "/products/**").hasAuthority("VIEW_PRODUCTS")
+                    .antMatchers("/" + foodFinderPrefix + "/recognize/**").hasAuthority("RECOGNIZE")
+                    .antMatchers("/" + foodFinderPrefix + "/migrate/**").hasAuthority("MIGRATE")
+                    .antMatchers("/" + foodFinderPrefix + "/translate/**").hasAuthority("TRANSLATE")
+                    .antMatchers("/" + foodFinderPrefix + "/users/**").hasAuthority("VIEW_USERS")
+                    .antMatchers("/" + foodFinderPrefix + "/**").authenticated()
                     .and()
                 .formLogin()
                     .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/login");
     }
 
 }
