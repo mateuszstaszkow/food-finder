@@ -207,11 +207,24 @@ public class FoodMapper {
             return null;
         }
 
-        List<Composition> list1 = new ArrayList<>(list.size());
+        List<Composition> dbList = new ArrayList<>(list.size());
         for ( CompositionDTO compositionDTO : list ) {
-            list1.add( toEntity( compositionDTO ) );
+            dbList.add( toEntity( compositionDTO ) );
         }
 
-        return list1;
+        return dbList;
+    }
+
+    public List<Product> productListToEntity(List<ProductDTO> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Product> dbList = new ArrayList<>( list.size() );
+        for ( ProductDTO productDTO : list ) {
+            dbList.add( toEntity( productDTO ) );
+        }
+
+        return dbList;
     }
 }

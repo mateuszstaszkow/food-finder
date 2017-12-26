@@ -21,7 +21,7 @@ public class Dish implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", unique = true, length = 50)
+    @Column(name = "name", length = 200)
     private String name;
 
     @Column(name = "description", length = 2000)
@@ -32,4 +32,10 @@ public class Dish implements Serializable {
 
     @Column(name = "hits")
     private Long hits;
+
+    @Column(name = "name_pl", length = 200)
+    private String translatedName;
+
+    @Column(name = "description_pl", length = 2000)
+    private String translatedDescription;
 }

@@ -1,13 +1,16 @@
 package com.foodfinder.dish.service;
 
 import com.foodfinder.dish.dao.DishRepository;
-import com.foodfinder.dish.domain.mapper.DishMapper;
 import com.foodfinder.dish.domain.dto.DishDTO;
+import com.foodfinder.dish.domain.entity.Dish;
+import com.foodfinder.dish.domain.mapper.DishMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -18,11 +21,42 @@ import java.util.Optional;
 public class DishService {
 
     private final DishRepository dishRepository;
+    private final DishLiveSearchService liveSearchService;
     private final DishMapper dishMapper;
 
-    public List<DishDTO> getDishList() {
-        return Optional.ofNullable(dishRepository.findAll())
+    private static final int LIVE_SEARCH_PAGE_SIZE = 10;
+
+    public List<DishDTO> getDishList(Pageable pageable, String name) {
+        if(name == null) {
+            return getDishList(pageable);
+        }
+        return liveSearchService.getDishes(name, LIVE_SEARCH_PAGE_SIZE);
+    }
+
+    public List<DishDTO> getDishList(Pageable pageable) {
+        return Optional.ofNullable(dishRepository.findAll(pageable))
                 .map(dishMapper::dishListToDto)
                 .orElseThrow(NotFoundException::new);
+    }
+
+    public DishDTO getDish(Long id) {
+        return Optional.ofNullable(dishRepository.findOne(id))
+                .map(dishMapper::toDto)
+                .orElseThrow(NotFoundException::new);
+    }
+
+    public void postDish(DishDTO dish) {
+        Dish dishEntity = Optional.ofNullable(dish)
+                .map(dishMapper::toEntity)
+                .orElseThrow(BadRequestException::new);
+        dishRepository.save(dishEntity);
+    }
+
+    public void updateDish(Long id, DishDTO dish) {
+        Dish dishEntity = Optional.ofNullable(dish)
+                .map(dishMapper::toEntity)
+                .orElseThrow(BadRequestException::new);
+        dishEntity.setId(id);
+        dishRepository.save(dishEntity);
     }
 }

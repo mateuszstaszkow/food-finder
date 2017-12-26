@@ -32,59 +32,59 @@ public class FoodLiveSearchService {
     private static final String PRODUCT_TYPE = " raw";
     private static final String PRODUCT_TYPE_PL = " surow";
 
-    public List<ProductDTO> getProducts(String name, int numberOfResults) {
+    public List<ProductDTO> getProducts(String name, int limit) {
         if(translationService.isPolishLanguage()) {
-            return getTranslatedProducts(name, numberOfResults);
+            return getTranslatedProducts(name, limit);
         }
-        return getOriginalProducts(name, numberOfResults);
+        return getOriginalProducts(name, limit);
     }
 
-    public List<FoodGroupDTO> getFoodGroups(String name, int numberOfResults) {
+    public List<FoodGroupDTO> getFoodGroups(String name, int limit) {
         if(translationService.isPolishLanguage()) {
-            return getTranslatedFoodGroupsLiveSearch(name, numberOfResults);
+            return getTranslatedFoodGroupsLiveSearch(name, limit);
         }
-        return getOriginalFoodGroupsLiveSearch(name, numberOfResults);
+        return getOriginalFoodGroupsLiveSearch(name, limit);
     }
 
-    private List<FoodGroupDTO> getOriginalFoodGroupsLiveSearch(String name, int numberOfResults) {
+    private List<FoodGroupDTO> getOriginalFoodGroupsLiveSearch(String name, int limit) {
         return Optional.ofNullable(foodGroupRepository.findTop10ByNameContaining(name))
-                .map(groups -> truncateFoodGroupList(groups, numberOfResults))
+                .map(groups -> truncateFoodGroupList(groups, limit))
                 .map(foodMapper::foodGroupListToDto)
                 .orElseThrow(NotFoundException::new);
     }
 
-    private List<FoodGroupDTO> getTranslatedFoodGroupsLiveSearch(String name, int numberOfResults) {
+    private List<FoodGroupDTO> getTranslatedFoodGroupsLiveSearch(String name, int limit) {
         return Optional.ofNullable(foodGroupRepository.findTop10ByTranslatedNameContaining(name))
-                .map(groups -> truncateFoodGroupList(groups, numberOfResults))
+                .map(groups -> truncateFoodGroupList(groups, limit))
                 .map(foodMapper::foodGroupListToDto)
                 .orElseThrow(NotFoundException::new);
     }
 
-    private List<ProductDTO> getOriginalProducts(String name, int numberOfResults) {
-        List<ProductDTO> rawProducts = getSortedDTOs(
-                productRepository.findByNameStartsWithAndIsCondition(name, PRODUCT_TYPE));
-        getAdditionalProducts(numberOfResults, rawProducts, productRepository.findByNameStartsWith(name));
-        getAdditionalProducts(numberOfResults, rawProducts, productRepository.findTop10ByNameContaining(name));
-
-        return rawProducts;
+    private List<ProductDTO> getOriginalProducts(String name, int limit) {
+        return Optional.ofNullable(productRepository.findByNameStartsWithAndIsCondition(name, PRODUCT_TYPE))
+                .map(this::getSortedDTOs)
+                .map(p -> getAdditionalProducts(limit, p, productRepository.findByNameStartsWith(name)))
+                .map(p -> getAdditionalProducts(limit, p, productRepository.findTop10ByNameContaining(name)))
+                .map(p -> truncateProductList(p, limit))
+                .orElseThrow(NotFoundException::new);
     }
 
-    private List<ProductDTO> getTranslatedProducts(String name, int numberOfResults) {
-        List<ProductDTO> rawProducts = getSortedDTOs(
-                productRepository.findByTranslatedNameStartsWithAndIsCondition(name, PRODUCT_TYPE_PL));
-        getAdditionalProducts(numberOfResults, rawProducts, productRepository.findByTranslatedNameStartsWith(name));
-        getAdditionalProducts(numberOfResults, rawProducts, productRepository.findTop10ByTranslatedNameContaining(name));
-
-        return rawProducts;
+    private List<ProductDTO> getTranslatedProducts(String name, int limit) {
+        return Optional.ofNullable(productRepository.findByTranslatedNameStartsWithAndIsCondition(name, PRODUCT_TYPE_PL))
+                .map(this::getSortedDTOs)
+                .map(p -> getAdditionalProducts(limit, p, productRepository.findByTranslatedNameStartsWith(name)))
+                .map(p -> getAdditionalProducts(limit, p, productRepository.findTop10ByTranslatedNameContaining(name)))
+                .map(p -> truncateProductList(p, limit))
+                .orElseThrow(NotFoundException::new);
     }
 
-    private void getAdditionalProducts(int numberOfResults, List<ProductDTO> rawProducts, List<Product> productDbList) {
-        if(rawProducts.size() >= numberOfResults) {
-            return;
+    private List<ProductDTO> getAdditionalProducts(int limit, List<ProductDTO> rawProducts, List<Product> productDbList) {
+        if(rawProducts.size() >= limit) {
+            return rawProducts;
         }
 
         List<ProductDTO> additionalProducts = getSortedDTOs(productDbList);
-        int toMaximum = numberOfResults - rawProducts.size();
+        int toMaximum = limit - rawProducts.size();
         int productsToFind = toMaximum < additionalProducts.size() ? toMaximum : additionalProducts.size();
 
         IntStream.range(0, productsToFind)
@@ -94,6 +94,8 @@ public class FoodLiveSearchService {
                         rawProducts.add(additionalProduct);
                     }
                 });
+        
+        return rawProducts;
     }
 
     private List<ProductDTO> getSortedDTOs(List<Product> productDbList) {
@@ -106,9 +108,15 @@ public class FoodLiveSearchService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    private List<FoodGroup> truncateFoodGroupList(List<FoodGroup> foodGroups, int numberOfResults) {
+    private List<ProductDTO> truncateProductList(List<ProductDTO> products, int limit) {
+        return products.stream()
+                .limit(limit)
+                .collect(Collectors.toList());
+    }
+
+    private List<FoodGroup> truncateFoodGroupList(List<FoodGroup> foodGroups, int limit) {
         return foodGroups.stream()
-                .limit(numberOfResults)
+                .limit(limit)
                 .collect(Collectors.toList());
     }
 }
