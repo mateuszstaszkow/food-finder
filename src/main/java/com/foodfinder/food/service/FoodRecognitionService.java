@@ -28,13 +28,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FoodRecognitionService {
 
-    private final ProductsLiveSearchService liveSearchService;
+    private final FoodLiveSearchService liveSearchService;
 
     private static final int FEATURE_MAX_RESULTS = 5;
     private static final int MAX_FILE_SIZE = 128000;
     private static final int LIVE_SEARCH_PAGE_SIZE = 10;
-    private static final String FEATURE_TYPE = "LABEL_DETECTION";
-    private static final String[] FEATURE_BANNED_TYPES = {"food", "vegetable", "produce", "fruit", "product", "dish"};
+    private static final String FEATURE_TYPE = "LABEL_DETECTION"; //TODO
+    private static final String[] FEATURE_BANNED_TYPES = {"food", "vegetable", "produce", "fruit", "product", "dish"}; //TODO
 
     @Value("${google.vision.url}")
     private String GOOGLE_VISION_URL;

@@ -19,11 +19,8 @@ class FoodGroupRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<FoodGroupDTO> getFoodGroupList(Pageable pageable,
-                                           @RequestParam(value="name", required = false) String name,
-                                           @RequestParam(value="language", required = false) String language) {
-
-        return foodGroupService.getFoodGroupList(pageable, name, language);
+    public List<FoodGroupDTO> getFoodGroupList(Pageable pageable, @RequestParam(value="name", required = false) String name) {
+        return foodGroupService.getFoodGroupList(pageable, name);
     }
 
     @RequestMapping(method = RequestMethod.POST)

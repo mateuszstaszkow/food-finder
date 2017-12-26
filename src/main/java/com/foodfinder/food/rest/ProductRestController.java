@@ -19,11 +19,8 @@ class ProductRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDTO> getProductList(Pageable pageable,
-                                           @RequestParam(value="name", required = false) String name,
-                                           @RequestParam(value="language", required = false) String language) {
-
-        return productService.getProductList(pageable, name, language);
+    public List<ProductDTO> getProductList(Pageable pageable, @RequestParam(value="name", required = false) String name) {
+        return productService.getProductList(pageable, name);
     }
 
     @RequestMapping(method = RequestMethod.POST)

@@ -27,7 +27,8 @@ public interface MigrationMapper {
             @Mapping(source = "ndbno", target = "id"),
             @Mapping(source = "nutrients", target = "composition"),
             @Mapping(target = "hits", ignore = true),
-            @Mapping(target = "translatedName", ignore = true)
+            @Mapping(target = "translatedName", ignore = true),
+            @Mapping(target = "foodGroup.translatedName", ignore = true)
     })
     Product toEntity(ProductResponseDTO response);
 }

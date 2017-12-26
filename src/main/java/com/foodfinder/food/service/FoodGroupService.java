@@ -6,7 +6,6 @@ import com.foodfinder.food.domain.entity.FoodGroup;
 import com.foodfinder.food.domain.mapper.FoodMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,33 +22,19 @@ public class FoodGroupService {
 
     private final FoodGroupRepository foodGroupRepository;
     private final FoodMapper foodMapper;
+    private final FoodLiveSearchService liveSearchService;
 
-    @Value("${food-finder.english-flag}")
-    private String englishFlag;
+    private static final int LIVE_SEARCH_PAGE_SIZE = 10;
 
-    public List<FoodGroupDTO> getFoodGroupList(Pageable pageable, String name, String language) {
+    public List<FoodGroupDTO> getFoodGroupList(Pageable pageable, String name) {
         if(name == null) {
             return getFoodGroupList(pageable);
-        } else if(language == null || language.equals(englishFlag)) {
-            return getFoodGroupsLiveSearch(name);
         }
-        return getTranslatedFoodGroupsLiveSearch(name);
+        return liveSearchService.getFoodGroups(name, LIVE_SEARCH_PAGE_SIZE);
     }
 
     public List<FoodGroupDTO> getFoodGroupList(Pageable pageable) {
         return Optional.ofNullable(foodGroupRepository.findAll(pageable))
-                .map(foodMapper::foodGroupListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    public List<FoodGroupDTO> getFoodGroupsLiveSearch(String name) {
-        return Optional.ofNullable(foodGroupRepository.findTop10ByNameContaining(name))
-                .map(foodMapper::foodGroupListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    public List<FoodGroupDTO> getTranslatedFoodGroupsLiveSearch(String name) {
-        return Optional.ofNullable(foodGroupRepository.findTop10ByTranslatedNameContaining(name))
                 .map(foodMapper::foodGroupListToDto)
                 .orElseThrow(NotFoundException::new);
     }

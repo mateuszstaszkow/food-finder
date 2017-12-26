@@ -6,7 +6,6 @@ import com.foodfinder.food.domain.entity.Product;
 import com.foodfinder.food.domain.mapper.FoodMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,21 +21,16 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final FoodLiveSearchService liveSearchService;
     private final FoodMapper foodMapper;
-    private final ProductsLiveSearchService liveSearchService;
 
     private static final int LIVE_SEARCH_PAGE_SIZE = 10;
 
-    @Value("${food-finder.english-flag}")
-    private String englishFlag;
-
-    public List<ProductDTO> getProductList(Pageable pageable, String name, String language) {
+    public List<ProductDTO> getProductList(Pageable pageable, String name) {
         if(name == null) {
             return getProductList(pageable);
-        } else if(language == null || language.equals(englishFlag)) {
-            return liveSearchService.getProducts(name, LIVE_SEARCH_PAGE_SIZE);
         }
-        return liveSearchService.getTranslatedProducts(name, LIVE_SEARCH_PAGE_SIZE);
+        return liveSearchService.getProducts(name, LIVE_SEARCH_PAGE_SIZE);
     }
 
     public List<ProductDTO> getProductList(Pageable pageable) {
