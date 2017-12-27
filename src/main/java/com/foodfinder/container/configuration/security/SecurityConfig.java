@@ -72,6 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/" + foodFinderPrefix + "/roles/**").hasAuthority("VIEW_ROLES")
                     .antMatchers("/" + foodFinderPrefix + "/privileges/**").hasAuthority("VIEW_PRIVILEGES")
                     .antMatchers("/" + foodFinderPrefix + "/**").authenticated()
+                    .antMatchers("/v2/**").hasAuthority("VIEW_ADMIN")
+                    .antMatchers("/swagger-ui.html/**").hasAuthority("VIEW_ADMIN")
                     .and()
                 .addFilter(authFilter())
                 .logout()
