@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Transactional
@@ -39,7 +38,7 @@ public class FoodFinderUserDetailsService implements UserDetailsService {
         }
     }
 
-    private Set<GrantedAuthority> getAuthorities(List<Privilege> privileges){
+    private Set<GrantedAuthority> getAuthorities(Set<Privilege> privileges){
         Set<GrantedAuthority> authorities = new HashSet<>();
         privileges.stream()
                 .map(Privilege::getName)

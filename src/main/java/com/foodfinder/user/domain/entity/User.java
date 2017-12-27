@@ -1,5 +1,6 @@
 package com.foodfinder.user.domain.entity;
 
+import com.foodfinder.day.domain.entity.Day;
 import com.foodfinder.diet.domain.Diet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -53,4 +54,11 @@ public class User implements Serializable {
 
     @Column(name = "gender", length = 50)
     private String gender;
+
+    @JoinTable(name = "user_day",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "day_id", referencedColumnName = "id")
+    )
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Day> days;
 }

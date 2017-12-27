@@ -1,5 +1,6 @@
 package com.foodfinder.user.domain.dto;
 
+import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.diet.dto.DietDTO;
 import lombok.Data;
 
@@ -18,4 +19,5 @@ public class UserDTO {
     private String gender;
     //private List<DietDTO> diets;
     private RoleDTO role;
+    private List<DayDTO> days;
 }

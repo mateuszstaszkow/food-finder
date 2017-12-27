@@ -1,5 +1,6 @@
 package com.foodfinder.user.domain.mapper;
 
+import com.foodfinder.day.domain.mapper.DayMapper;
 import com.foodfinder.user.domain.dto.PrivilegeDTO;
 import com.foodfinder.user.domain.dto.RegistrationDTO;
 import com.foodfinder.user.domain.dto.RoleDTO;
@@ -14,7 +15,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = DayMapper.class)
 public interface UserMapper {
 
     @Mappings({
@@ -25,7 +26,7 @@ public interface UserMapper {
 
     UserDTO toDto(User user);
 
-    List<UserDTO> userListToDto(Page<User> productPage);
+    List<UserDTO> userListToDto(Page<User> userPage);
 
     Role toEntity(RoleDTO userDTO);
 
@@ -35,7 +36,10 @@ public interface UserMapper {
 
     PrivilegeDTO toDto(Privilege user);
 
-    List<PrivilegeDTO> privilegeListToDto(Page<Privilege> productPage);
+    List<RoleDTO> roleListToDto(Page<Role> rolePage);
 
+    List<PrivilegeDTO> privilegeListToDto(Page<Privilege> privilegePage);
+
+    @Mapping(target = "days", ignore = true)
     User toEntity(RegistrationDTO userDTO);
 }

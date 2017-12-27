@@ -1,0 +1,5 @@
+INSERT INTO `privilege` VALUES (11,'VIEW_ROLES');
+INSERT INTO `privilege` VALUES (12,'VIEW_PRIVILEGES');
+
+INSERT INTO `role_privilege` VALUES (1,11);
+INSERT INTO `role_privilege` VALUES (1,12);
