@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -28,7 +28,7 @@ public class Dish implements Serializable {
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Product> products;
+    private Set<Product> products;
 
     @Column(name = "hits")
     private Long hits;

@@ -1,7 +1,6 @@
 package com.foodfinder.user.domain.dto;
 
 import com.foodfinder.day.domain.dto.DayDTO;
-import com.foodfinder.diet.dto.DietDTO;
 import lombok.Data;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.foodfinder.diet.rest;
 
-import com.foodfinder.diet.DietService;
+import com.foodfinder.diet.service.DietService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -13,7 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -70,7 +72,7 @@ public class FoodMapper {
         product.setId( productDTO.getId() );
         product.setWeight( productDTO.getWeight() );
         product.setMeasure( productDTO.getMeasure() );
-        product.setComposition( compositionDTOListToCompositionList( productDTO.getComposition() ) );
+        product.setComposition( compositionDTOListToCompositionSet( productDTO.getComposition() ) );
         product.setHits( productDTO.getHits() );
         if(foodTranslationService.isPolishLanguage()) {
             product.setTranslatedName( productDTO.getName() );
@@ -91,7 +93,7 @@ public class FoodMapper {
         productDTO.setId( product.getId() );
         productDTO.setWeight( product.getWeight() );
         productDTO.setMeasure( product.getMeasure() );
-        productDTO.setComposition( compositionListToDto( product.getComposition() ) );
+        productDTO.setComposition( compositionSetToDto( product.getComposition() ) );
         productDTO.setFoodGroup( toDto( product.getFoodGroup() ) );
         productDTO.setHits( product.getHits() );
         if(foodTranslationService.isPolishLanguage()) {
@@ -117,6 +119,19 @@ public class FoodMapper {
     }
 
     public List<ProductDTO> productListToDto(List<Product> productList) {
+        if ( productList == null ) {
+            return null;
+        }
+
+        List<ProductDTO> list = new ArrayList<>(productList.size());
+        for ( Product product : productList ) {
+            list.add( toDto( product ) );
+        }
+
+        return list;
+    }
+
+    public List<ProductDTO> productListToDto(Set<Product> productList) {
         if ( productList == null ) {
             return null;
         }
@@ -189,7 +204,7 @@ public class FoodMapper {
         return list;
     }
 
-    public List<CompositionDTO> compositionListToDto(List<Composition> compositionList) {
+    public List<CompositionDTO> compositionSetToDto(Set<Composition> compositionList) {
         if ( compositionList == null ) {
             return null;
         }
@@ -215,6 +230,19 @@ public class FoodMapper {
         return dbList;
     }
 
+    public Set<Composition> compositionDTOListToCompositionSet(List<CompositionDTO> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        Set<Composition> dbList = new HashSet<>(list.size());
+        for ( CompositionDTO compositionDTO : list ) {
+            dbList.add( toEntity( compositionDTO ) );
+        }
+
+        return dbList;
+    }
+
     public List<Product> productListToEntity(List<ProductDTO> list) {
         if ( list == null ) {
             return null;
@@ -226,5 +254,18 @@ public class FoodMapper {
         }
 
         return dbList;
+    }
+
+    public Set<Product> productListToEntitySet(List<ProductDTO> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        Set<Product> dbSet = new HashSet<>( list.size() );
+        for ( ProductDTO productDTO : list ) {
+            dbSet.add( toEntity( productDTO ) );
+        }
+
+        return dbSet;
     }
 }

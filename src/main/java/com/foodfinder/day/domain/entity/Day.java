@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -28,5 +28,5 @@ public class Day implements Serializable {
     private Date date;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<TimedDish> timedDishes;
+    private Set<TimedDish> timedDishes;
 }

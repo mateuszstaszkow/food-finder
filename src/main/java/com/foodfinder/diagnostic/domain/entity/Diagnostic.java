@@ -1,4 +1,4 @@
-package com.foodfinder.diagnostic.domain;
+package com.foodfinder.diagnostic.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

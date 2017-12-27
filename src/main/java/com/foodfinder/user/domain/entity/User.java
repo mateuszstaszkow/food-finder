@@ -1,7 +1,6 @@
 package com.foodfinder.user.domain.entity;
 
 import com.foodfinder.day.domain.entity.Day;
-import com.foodfinder.diet.domain.Diet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,7 +37,7 @@ public class User implements Serializable {
     private Boolean enabled;
 
     //@ManyToMany(cascade = CascadeType.ALL)
-    //private List<Diet> diets;
+    //private Set<Diet> diets;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     private Role role;

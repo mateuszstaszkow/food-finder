@@ -1,4 +1,4 @@
-package com.foodfinder.diet;
+package com.foodfinder.diet.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 public class DietService {
 
     public String getFoodList() {
-        return "lista diet";
+        return "[]";
     }
 }

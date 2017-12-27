@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -17,7 +17,7 @@ import java.util.List;
 public class Product implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", unique = true, nullable = false, length = 200)
@@ -30,7 +30,7 @@ public class Product implements Serializable {
     private String measure;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Composition> composition;
+    private Set<Composition> composition;
 
     @Column(name = "description", length = 1000)
     private String description;

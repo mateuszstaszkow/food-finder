@@ -1,4 +1,4 @@
-package com.foodfinder.diet.dto;
+package com.foodfinder.diet.domain.dto;
 
 import lombok.Data;
 

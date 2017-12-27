@@ -27,7 +27,7 @@ public class DishMapper {
         Dish dish = new Dish();
 
         dish.setId( dishDTO.getId() );
-        dish.setProducts( foodMapper.productListToEntity( dishDTO.getProducts() ) );
+        dish.setProducts( foodMapper.productListToEntitySet( dishDTO.getProducts() ) );
         dish.setHits( dishDTO.getHits() );
         if(foodTranslationService.isPolishLanguage()) {
             dish.setTranslatedName( dishDTO.getName() );
