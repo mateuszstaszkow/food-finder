@@ -1,6 +1,6 @@
 package com.foodfinder.user.service;
 
-import com.foodfinder.user.dao.PrivilegeRepository;
+import com.foodfinder.user.repository.PrivilegeRepository;
 import com.foodfinder.user.domain.dto.PrivilegeDTO;
 import com.foodfinder.user.domain.entity.Privilege;
 import com.foodfinder.user.domain.mapper.UserMapper;

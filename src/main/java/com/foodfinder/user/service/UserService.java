@@ -1,6 +1,6 @@
 package com.foodfinder.user.service;
 
-import com.foodfinder.user.dao.UserRepository;
+import com.foodfinder.user.repository.UserRepository;
 import com.foodfinder.user.domain.entity.User;
 import com.foodfinder.user.domain.mapper.UserMapper;
 import com.foodfinder.user.domain.dto.UserDTO;

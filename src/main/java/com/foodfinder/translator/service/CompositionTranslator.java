@@ -1,7 +1,7 @@
 package com.foodfinder.translator.service;
 
 import com.foodfinder.food.domain.entity.Composition;
-import com.foodfinder.food.dao.CompositionRepository;
+import com.foodfinder.food.repository.CompositionRepository;
 import com.google.common.math.IntMath;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

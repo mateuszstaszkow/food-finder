@@ -1,6 +1,6 @@
 package com.foodfinder.translator.service;
 
-import com.foodfinder.food.dao.FoodGroupRepository;
+import com.foodfinder.food.repository.FoodGroupRepository;
 import com.foodfinder.food.domain.entity.FoodGroup;
 import com.foodfinder.translator.domain.dto.TranslateResponseDTO;
 import lombok.RequiredArgsConstructor;

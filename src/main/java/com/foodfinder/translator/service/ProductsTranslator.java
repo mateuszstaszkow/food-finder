@@ -1,6 +1,6 @@
 package com.foodfinder.translator.service;
 
-import com.foodfinder.food.dao.ProductRepository;
+import com.foodfinder.food.repository.ProductRepository;
 import com.foodfinder.food.domain.entity.Product;
 import com.foodfinder.translator.domain.dto.TranslateResponseDTO;
 import com.google.common.math.IntMath;

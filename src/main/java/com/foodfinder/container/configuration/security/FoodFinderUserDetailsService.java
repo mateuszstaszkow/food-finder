@@ -1,6 +1,6 @@
 package com.foodfinder.container.configuration.security;
 
-import com.foodfinder.user.dao.UserRepository;
+import com.foodfinder.user.repository.UserRepository;
 import com.foodfinder.user.domain.entity.Privilege;
 import com.foodfinder.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;

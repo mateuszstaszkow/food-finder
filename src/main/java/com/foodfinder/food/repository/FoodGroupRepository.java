@@ -1,4 +1,4 @@
-package com.foodfinder.food.dao;
+package com.foodfinder.food.repository;
 
 import com.foodfinder.food.domain.entity.FoodGroup;
 import org.springframework.data.jpa.repository.JpaRepository;

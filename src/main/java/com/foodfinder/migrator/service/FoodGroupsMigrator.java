@@ -1,7 +1,7 @@
 package com.foodfinder.migrator.service;
 
 import com.foodfinder.container.exceptions.UsdaRestException;
-import com.foodfinder.food.dao.FoodGroupRepository;
+import com.foodfinder.food.repository.FoodGroupRepository;
 import com.foodfinder.food.domain.entity.FoodGroup;
 import com.foodfinder.migrator.domain.dto.FoodGroupResponseDTO;
 import com.foodfinder.migrator.domain.dto.UsdaGroupResponseDTO;

@@ -1,6 +1,6 @@
 package com.foodfinder.food.service;
 
-import com.foodfinder.food.dao.FoodGroupRepository;
+import com.foodfinder.food.repository.FoodGroupRepository;
 import com.foodfinder.food.domain.dto.FoodGroupDTO;
 import com.foodfinder.food.domain.entity.FoodGroup;
 import com.foodfinder.food.domain.mapper.FoodMapper;

@@ -1,7 +1,7 @@
 package com.foodfinder.migrator.service;
 
-import com.foodfinder.food.dao.FoodGroupRepository;
-import com.foodfinder.food.dao.ProductRepository;
+import com.foodfinder.food.repository.FoodGroupRepository;
+import com.foodfinder.food.repository.ProductRepository;
 import com.foodfinder.food.domain.entity.FoodGroup;
 import com.foodfinder.food.domain.entity.Product;
 import com.foodfinder.migrator.domain.dto.FoodGroupResponseDTO;

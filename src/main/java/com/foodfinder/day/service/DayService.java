@@ -1,6 +1,6 @@
 package com.foodfinder.day.service;
 
-import com.foodfinder.day.dao.DayRepository;
+import com.foodfinder.day.repository.DayRepository;
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.domain.entity.Day;
 import com.foodfinder.day.domain.mapper.DayMapper;

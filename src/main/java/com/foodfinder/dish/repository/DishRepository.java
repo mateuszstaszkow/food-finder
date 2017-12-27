@@ -1,4 +1,4 @@
-package com.foodfinder.dish.dao;
+package com.foodfinder.dish.repository;
 
 import com.foodfinder.dish.domain.entity.Dish;
 import com.foodfinder.food.domain.entity.Product;

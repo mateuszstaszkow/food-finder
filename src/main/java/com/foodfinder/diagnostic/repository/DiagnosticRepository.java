@@ -1,4 +1,4 @@
-package com.foodfinder.diagnostic.dao;
+package com.foodfinder.diagnostic.repository;
 
 import com.foodfinder.diagnostic.domain.entity.Diagnostic;
 import org.springframework.data.jpa.repository.JpaRepository;

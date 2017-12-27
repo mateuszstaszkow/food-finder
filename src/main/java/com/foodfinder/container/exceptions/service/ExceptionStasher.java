@@ -2,7 +2,7 @@ package com.foodfinder.container.exceptions.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foodfinder.container.exceptions.StashingException;
-import com.foodfinder.diagnostic.dao.DiagnosticRepository;
+import com.foodfinder.diagnostic.repository.DiagnosticRepository;
 import com.foodfinder.diagnostic.domain.entity.Diagnostic;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

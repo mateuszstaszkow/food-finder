@@ -1,6 +1,6 @@
 package com.foodfinder.diagnostic.service;
 
-import com.foodfinder.diagnostic.dao.DiagnosticRepository;
+import com.foodfinder.diagnostic.repository.DiagnosticRepository;
 import com.foodfinder.diagnostic.domain.dto.DiagnosticDTO;
 import com.foodfinder.diagnostic.domain.entity.Diagnostic;
 import com.foodfinder.diagnostic.domain.mapper.DiagnosticMapper;
