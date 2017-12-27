@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Builder
 @NoArgsConstructor
@@ -24,4 +25,10 @@ public class Diagnostic implements Serializable {
 
     @Column(name = "exception", length = 1000)
     private String exception;
+
+    @Column(name = "comments", length = 1000)
+    private String comments;
+
+    @Column(name = "date")
+    private Date date;
 }
