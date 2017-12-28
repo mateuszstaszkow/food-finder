@@ -39,29 +39,6 @@ public class DayService {
         return getDayList(from, to);
     }
 
-    public List<DayDTO> getDayList(Date date) {
-        String formattedDate = new SimpleDateFormat(dateFormat).format(date);
-
-        return Optional.ofNullable(dayRepository.findByDateString(formattedDate))
-                .map(dayMapper::dayListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    public List<DayDTO> getDayList(Pageable pageable) {
-        return Optional.ofNullable(dayRepository.findAll(pageable))
-                .map(dayMapper::dayListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    public List<DayDTO> getDayList(Date from, Date to) {
-        from = (from == null) ? new Date(0) : from;
-        to = (to == null) ? new Date() : to;
-
-        return Optional.ofNullable(dayRepository.findByDateBetween(from, to))
-                .map(dayMapper::dayListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
     public DayDTO getDay(Long id) {
         return Optional.ofNullable(dayRepository.findOne(id))
                 .map(dayMapper::toDto)
@@ -81,5 +58,28 @@ public class DayService {
                 .orElseThrow(BadRequestException::new);
         dayEntity.setId(id);
         dayRepository.save(dayEntity);
+    }
+
+    private List<DayDTO> getDayList(Date date) {
+        String formattedDate = new SimpleDateFormat(dateFormat).format(date);
+
+        return Optional.ofNullable(dayRepository.findByDateString(formattedDate))
+                .map(dayMapper::dayListToDto)
+                .orElseThrow(NotFoundException::new);
+    }
+
+    private List<DayDTO> getDayList(Pageable pageable) {
+        return Optional.ofNullable(dayRepository.findAll(pageable))
+                .map(dayMapper::dayListToDto)
+                .orElseThrow(NotFoundException::new);
+    }
+
+    private List<DayDTO> getDayList(Date from, Date to) {
+        from = (from == null) ? new Date(0) : from;
+        to = (to == null) ? new Date() : to;
+
+        return Optional.ofNullable(dayRepository.findByDateBetween(from, to))
+                .map(dayMapper::dayListToDto)
+                .orElseThrow(NotFoundException::new);
     }
 }

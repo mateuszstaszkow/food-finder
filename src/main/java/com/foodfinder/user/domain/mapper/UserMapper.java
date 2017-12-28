@@ -20,7 +20,8 @@ public interface UserMapper {
 
     @Mappings({
             @Mapping(target = "password", ignore = true),
-            @Mapping(target = "enabled", ignore = true)
+            @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "id", ignore = true)
     })
     User toEntity(UserDTO userDTO);
 

@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/" + foodFinderPrefix + "/recognize/**").hasAuthority("RECOGNIZE")
                     .antMatchers("/" + foodFinderPrefix + "/migrate/**").hasAuthority("MIGRATE")
                     .antMatchers("/" + foodFinderPrefix + "/translate/**").hasAuthority("TRANSLATE")
+                    .antMatchers("/" + foodFinderPrefix + "/users/me/**").hasAuthority("VIEW_ACCOUNT")
                     .antMatchers("/" + foodFinderPrefix + "/users/**").hasAuthority("VIEW_USERS")
                     .antMatchers("/" + foodFinderPrefix + "/roles/**").hasAuthority("VIEW_ROLES")
                     .antMatchers("/" + foodFinderPrefix + "/privileges/**").hasAuthority("VIEW_PRIVILEGES")
