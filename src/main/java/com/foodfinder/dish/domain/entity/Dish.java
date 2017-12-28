@@ -27,7 +27,7 @@ public class Dish implements Serializable {
     @Column(name = "description", length = 2000)
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     private Set<Product> products;
 
     @Column(name = "hits")

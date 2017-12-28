@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = DishMapper.class)
 public interface DayMapper {
@@ -21,5 +22,9 @@ public interface DayMapper {
 
     TimedDishDTO toDto(TimedDish timedDish);
 
+    List<DayDTO> dayListToDto(Set<Day> productPage);
+
     List<DayDTO> dayListToDto(Page<Day> productPage);
+
+    List<DayDTO> dayListToDto(List<Day> productPage);
 }

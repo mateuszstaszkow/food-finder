@@ -1,13 +1,16 @@
 package com.foodfinder.user.rest;
 
+import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.user.domain.dto.UserDTO;
 import com.foodfinder.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -39,5 +42,17 @@ class UserRestController {
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         userService.updateUser(id, userDTO);
+    }
+
+    @RequestMapping(value = "/{id}/days", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<DayDTO> getUserDays(@PathVariable Long id,
+                                    @RequestParam(value="date", required = false)
+                                        @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
+                                    @RequestParam(value="from", required = false)
+                                        @DateTimeFormat(pattern="yyyy-MM-dd") Date from,
+                                    @RequestParam(value="to", required = false)
+                                        @DateTimeFormat(pattern="yyyy-MM-dd") Date to) {
+        return userService.getUserDays(id, date, from, to);
     }
 }

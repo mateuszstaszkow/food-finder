@@ -5,9 +5,11 @@ import com.foodfinder.day.service.DayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,8 +21,14 @@ class DayRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<DayDTO> getDayList(Pageable pageable) {
-        return dayService.getDayList(pageable);
+    public List<DayDTO> getDayList(Pageable pageable,
+                                   @RequestParam(value="date", required = false)
+                                       @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
+                                   @RequestParam(value="from", required = false)
+                                       @DateTimeFormat(pattern="yyyy-MM-dd") Date from,
+                                   @RequestParam(value="to", required = false)
+                                       @DateTimeFormat(pattern="yyyy-MM-dd") Date to) {
+        return dayService.getDayList(pageable, date, from, to);
     }
 
     @RequestMapping(method = RequestMethod.POST)

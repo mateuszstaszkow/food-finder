@@ -14,3 +14,8 @@ INNER JOIN usda_national_nutrients.nut_data AS source_comp ON source_names.NDB_N
 INNER JOIN usda_national_nutrients.nutr_def AS source_comp_names ON source_comp.Nutr_No=source_comp_names.Nutr_No
 WHERE CAST(source_names.NDB_No AS UNSIGNED) > (SELECT MAX(food_finder.product.id) FROM food_finder.product)
 LIMIT 1;
+
+SELECT d.id FROM food_finder.user AS u
+INNER JOIN food_finder.user_day AS ud ON u.id = ud.user_id
+INNER JOIN food_finder.day AS d ON d.id = ud.day_id
+WHERE u.id = ?1

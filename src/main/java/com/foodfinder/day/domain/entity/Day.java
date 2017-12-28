@@ -18,15 +18,20 @@ import java.util.Set;
 public class Day implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", length = 200)
     private String name;
 
-    @Column(name = "date")
+    @Column(name = "date", columnDefinition="TIMESTAMP(6)")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @JoinTable(name = "day_timed_dish",
+            joinColumns = @JoinColumn(name = "day_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "timed_dish_id", referencedColumnName = "id")
+    )
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<TimedDish> timedDishes;
 }

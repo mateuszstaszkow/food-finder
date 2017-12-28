@@ -6,22 +6,25 @@ import com.foodfinder.food.domain.dto.ProductDTO;
 import com.foodfinder.food.domain.entity.Composition;
 import com.foodfinder.food.domain.entity.FoodGroup;
 import com.foodfinder.food.domain.entity.Product;
+import com.foodfinder.food.repository.CompositionRepository;
+import com.foodfinder.food.repository.FoodGroupRepository;
+import com.foodfinder.food.repository.ProductRepository;
 import com.foodfinder.food.service.FoodTranslationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class FoodMapper {
     
     private final FoodTranslationService foodTranslationService;
+    private final ProductRepository productRepository;
+    private final FoodGroupRepository foodGroupRepository;
+    private final CompositionRepository compositionRepository;
 
     public Composition toEntity(CompositionDTO compositionDTO) {
         if ( compositionDTO == null ) {
@@ -29,6 +32,10 @@ public class FoodMapper {
         }
 
         Composition composition = new Composition();
+        if(compositionDTO.getId() != null) {
+            composition = Optional.ofNullable(compositionRepository.findOne(compositionDTO.getId()))
+                    .orElse(new Composition());
+        }
 
         composition.setId( compositionDTO.getId() );
         composition.setUnit( compositionDTO.getUnit() );
@@ -67,6 +74,10 @@ public class FoodMapper {
         }
 
         Product product = new Product();
+        if(productDTO.getId() != null) {
+            product = Optional.ofNullable(productRepository.findById(productDTO.getId()))
+                    .orElse(new Product());
+        }
 
         product.setFoodGroup( toEntity( productDTO.getFoodGroup() ) );
         product.setId( productDTO.getId() );
@@ -167,6 +178,10 @@ public class FoodMapper {
         }
 
         FoodGroup foodGroup = new FoodGroup();
+        if(foodGroupDTO.getId() != null) {
+            foodGroup = Optional.ofNullable(foodGroupRepository.findOne(foodGroupDTO.getId()))
+                    .orElse(new FoodGroup());
+        }
 
         foodGroup.setId( foodGroupDTO.getId() );
         if(foodTranslationService.isPolishLanguage()) {

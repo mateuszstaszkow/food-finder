@@ -2,6 +2,7 @@ package com.foodfinder.dish.domain.mapper;
 
 import com.foodfinder.dish.domain.dto.DishDTO;
 import com.foodfinder.dish.domain.entity.Dish;
+import com.foodfinder.dish.repository.DishRepository;
 import com.foodfinder.food.domain.mapper.FoodMapper;
 import com.foodfinder.food.service.FoodTranslationService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -18,6 +20,7 @@ public class DishMapper {
 
     private final FoodTranslationService foodTranslationService;
     private final FoodMapper foodMapper;
+    private final DishRepository dishRepository;
 
     public Dish toEntity(DishDTO dishDTO) {
         if ( dishDTO == null ) {
@@ -25,6 +28,10 @@ public class DishMapper {
         }
 
         Dish dish = new Dish();
+        if(dishDTO.getId() != null) {
+            dish = Optional.ofNullable(dishRepository.findOne(dishDTO.getId()))
+                    .orElse(new Dish());
+        }
 
         dish.setId( dishDTO.getId() );
         dish.setProducts( foodMapper.productListToEntitySet( dishDTO.getProducts() ) );

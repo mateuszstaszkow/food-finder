@@ -38,7 +38,7 @@ public class Product implements Serializable {
     @Column(name = "short_description", length = 100)
     private String shortDescription;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private FoodGroup foodGroup;
 
     @Column(name = "hits")

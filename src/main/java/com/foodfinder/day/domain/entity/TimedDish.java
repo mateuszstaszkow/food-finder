@@ -24,6 +24,7 @@ public class TimedDish implements Serializable {
     @Column(name = "date")
     private Date date;
 
-    @JoinColumn(name = "dish_id")
+    @JoinColumn(name = "dish_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
     private Dish dish;
 }

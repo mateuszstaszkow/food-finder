@@ -20,7 +20,7 @@ apply plugin: 'war'
 
 war {
     baseName = 'food-finder'
-    version =  '0.1.0'
+    version =  '0.4.0'
 }
 
 repositories {
@@ -55,6 +55,7 @@ dependencies {
 
     //Calculations
     compile("com.google.guava:guava:23.5-jre")
+    compile("org.apache.commons:commons-lang3:3.7")
 
     //Unit tests
     testCompile("org.springframework.boot:spring-boot-starter-test")
