@@ -80,8 +80,7 @@ public class DayRestControllerTest {
         List<DayDTO> allDays = Collections.singletonList(day);
         PageRequest defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
 
-        given(dayService.getDayList(defaultPageRequest,null,null,null))
-                .willReturn(allDays);
+        given(dayService.getDayList(defaultPageRequest,null,null,null)).willReturn(allDays);
 
         mvc.perform(get("/api/days?personal=false")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -102,8 +101,7 @@ public class DayRestControllerTest {
                 .build();
         List<DayDTO> allDays = Collections.singletonList(day);
 
-        given(accountService.getAccountDays(null,null,null))
-                .willReturn(allDays);
+        given(accountService.getAccountDays(null,null,null)).willReturn(allDays);
 
         mvc.perform(get("/api/days")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -128,5 +126,12 @@ public class DayRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDay))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void givenUnauthorizedUser_thenReturnStatusUnauthorized() throws Exception {
+
+        mvc.perform(get("/api/days"))
+                .andExpect(status().isUnauthorized());
     }
 }

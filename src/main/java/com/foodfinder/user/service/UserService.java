@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public UserDTO getUser(Long id) {
-        return Optional.ofNullable(userRepository.findById(id))
+        return Optional.ofNullable(userRepository.findOne(id))
                 .map(userMapper::toDto)
                 .orElseThrow(NotFoundException::new);
     }
@@ -67,19 +67,19 @@ public class UserService {
         return getDayList(id, from, to);
     }
 
-    public List<DayDTO> getDayList(Long id, Date date) {
+    private List<DayDTO> getDayList(Long id, Date date) {
         return getDayList(id).stream()
                 .filter(day -> DateUtils.isSameDay(date, day.getDate()))
                 .collect(Collectors.toList());
     }
 
-    public List<DayDTO> getDayList(Long id) {
+    private List<DayDTO> getDayList(Long id) {
         return Optional.ofNullable(userRepository.findUserDays(id))
                 .map(dayMapper::dayListToDto)
                 .orElseThrow(NotFoundException::new);
     }
 
-    public List<DayDTO> getDayList(Long id, Date from, Date to) {
+    private List<DayDTO> getDayList(Long id, Date from, Date to) {
         return getDayList(id).stream()
                 .filter(day -> from.before(day.getDate()) && to.after(day.getDate()))
                 .collect(Collectors.toList());

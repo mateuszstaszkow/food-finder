@@ -1,3 +1,5 @@
+package com.foodfinder.integration
+
 import spock.lang.Specification
 
 class FirstSpecificationTest extends Specification {
