@@ -2,7 +2,7 @@ package com.foodfinder.user.service;
 
 import com.foodfinder.container.configuration.security.LoggedUserGetter;
 import com.foodfinder.day.domain.dto.DayDTO;
-import com.foodfinder.user.domain.dto.UserDTO;
+import com.foodfinder.user.domain.dto.BasicUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +17,14 @@ public class AccountService {
     private final UserService userService;
     private final LoggedUserGetter loggedUserGetter;
 
-    public UserDTO getAccount() {
+    public BasicUserDTO getAccount() {
         Long loggedUserId = loggedUserGetter.getLoggedUser().getId();
-        return userService.getUser(loggedUserId);
+        return userService.getBasicUser(loggedUserId);
     }
 
-    public void updateAccount(UserDTO user) {
+    public void updateAccount(BasicUserDTO user) {
         Long loggedUserId = loggedUserGetter.getLoggedUser().getId();
-        userService.updateUser(loggedUserId, user);
+        userService.updateBasicUser(loggedUserId, user);
     }
 
     public List<DayDTO> getAccountDays(Date date, Date from, Date to) {

@@ -1,7 +1,7 @@
 package com.foodfinder.user.rest;
 
 import com.foodfinder.day.domain.dto.DayDTO;
-import com.foodfinder.user.domain.dto.UserDTO;
+import com.foodfinder.user.domain.dto.BasicUserDTO;
 import com.foodfinder.user.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ class AccountRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO getAccount() {
+    public BasicUserDTO getAccount() {
         return accountService.getAccount();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addUser(@RequestBody UserDTO userDTO) {
+    public void addUser(@RequestBody BasicUserDTO userDTO) {
         accountService.updateAccount(userDTO);
     }
 

@@ -2,6 +2,7 @@ package com.foodfinder.user.service;
 
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.domain.mapper.DayMapper;
+import com.foodfinder.user.domain.dto.BasicUserDTO;
 import com.foodfinder.user.domain.dto.UserDTO;
 import com.foodfinder.user.domain.entity.User;
 import com.foodfinder.user.domain.mapper.UserMapper;
@@ -39,6 +40,12 @@ public class UserService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public BasicUserDTO getBasicUser(Long id) {
+        return Optional.ofNullable(userRepository.findOne(id))
+                .map(userMapper::toBasicDto)
+                .orElseThrow(NotFoundException::new);
+    }
+
     public void postUser(UserDTO user) {
         User userEntity = Optional.ofNullable(user)
                 .map(userMapper::toEntity)
@@ -47,6 +54,14 @@ public class UserService {
     }
 
     public void updateUser(Long id, UserDTO user) {
+        User userEntity = Optional.ofNullable(user)
+                .map(userMapper::toEntity)
+                .orElseThrow(BadRequestException::new);
+        userEntity.setId(id);
+        userRepository.save(userEntity);
+    }
+
+    public void updateBasicUser(Long id, BasicUserDTO user) {
         User userEntity = Optional.ofNullable(user)
                 .map(userMapper::toEntity)
                 .orElseThrow(BadRequestException::new);

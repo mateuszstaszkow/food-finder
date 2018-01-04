@@ -1,10 +1,7 @@
 package com.foodfinder.user.domain.mapper;
 
 import com.foodfinder.day.domain.mapper.DayMapper;
-import com.foodfinder.user.domain.dto.PrivilegeDTO;
-import com.foodfinder.user.domain.dto.RegistrationDTO;
-import com.foodfinder.user.domain.dto.RoleDTO;
-import com.foodfinder.user.domain.dto.UserDTO;
+import com.foodfinder.user.domain.dto.*;
 import com.foodfinder.user.domain.entity.Privilege;
 import com.foodfinder.user.domain.entity.Role;
 import com.foodfinder.user.domain.entity.User;
@@ -25,7 +22,17 @@ public interface UserMapper {
     })
     User toEntity(UserDTO userDTO);
 
+    @Mappings({
+            @Mapping(target = "role", ignore = true),
+            @Mapping(target = "password", ignore = true),
+            @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "id", ignore = true)
+    })
+    User toEntity(BasicUserDTO userDTO);
+
     UserDTO toDto(User user);
+
+    BasicUserDTO toBasicDto(User user);
 
     List<UserDTO> userListToDto(Page<User> userPage);
 
@@ -41,6 +48,11 @@ public interface UserMapper {
 
     List<PrivilegeDTO> privilegeListToDto(Page<Privilege> privilegePage);
 
-    @Mapping(target = "days", ignore = true)
+    @Mappings({
+            @Mapping(target = "role", ignore = true),
+            @Mapping(target = "days", ignore = true),
+            @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "id", ignore = true)
+    })
     User toEntity(RegistrationDTO userDTO);
 }
