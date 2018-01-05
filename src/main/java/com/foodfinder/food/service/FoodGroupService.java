@@ -33,12 +33,6 @@ public class FoodGroupService {
         return liveSearchService.getFoodGroups(name, LIVE_SEARCH_PAGE_SIZE);
     }
 
-    public List<FoodGroupDTO> getFoodGroupList(Pageable pageable) {
-        return Optional.ofNullable(foodGroupRepository.findAll(pageable))
-                .map(foodMapper::foodGroupListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
     public FoodGroupDTO getFoodGroup(Long id) {
         return Optional.ofNullable(foodGroupRepository.findById(id))
                 .map(foodMapper::toDto)
@@ -58,5 +52,11 @@ public class FoodGroupService {
                 .orElseThrow(BadRequestException::new);
         foodGroupEntity.setId(id);
         foodGroupRepository.save(foodGroupEntity);
+    }
+
+    private List<FoodGroupDTO> getFoodGroupList(Pageable pageable) {
+        return Optional.ofNullable(foodGroupRepository.findAll(pageable))
+                .map(foodMapper::foodGroupListToDto)
+                .orElseThrow(NotFoundException::new);
     }
 }

@@ -48,7 +48,7 @@ public class DishLiveSearchService {
                 .map(p -> getAdditionalDishes(limit, p, dishRepository.findByNameStartsWith(name)))
                 .map(p -> getAdditionalDishes(limit, p, dishRepository.findTop10ByNameContaining(name)))
                 .map(p -> getAdditionalDishes(limit, p, getDishesByProducts(name, limit, p.size())))
-                .map(p -> truncateDishList(p, limit))
+                .map(p -> sortAndTruncateDishList(p, limit))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -57,7 +57,7 @@ public class DishLiveSearchService {
                 .map(this::getSortedDTOs)
                 .map(p -> getAdditionalDishes(limit, p, dishRepository.findByTranslatedNameStartsWith(name)))
                 .map(p -> getAdditionalDishes(limit, p, dishRepository.findTop10ByTranslatedNameContaining(name)))
-                .map(p -> truncateDishList(p, limit))
+                .map(p -> sortAndTruncateDishList(p, limit))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -108,8 +108,9 @@ public class DishLiveSearchService {
                 .orElse(new ArrayList<>());
     }
 
-    private List<DishDTO> truncateDishList(List<DishDTO> dishes, int limit) {
+    private List<DishDTO> sortAndTruncateDishList(List<DishDTO> dishes, int limit) {
         return dishes.stream()
+                .sorted(Comparator.comparingLong(DishDTO::getHits).reversed())
                 .limit(limit)
                 .collect(Collectors.toList());
     }

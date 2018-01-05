@@ -65,7 +65,7 @@ public class FoodLiveSearchService {
                 .map(this::getSortedDTOs)
                 .map(p -> getAdditionalProducts(limit, p, productRepository.findByNameStartsWith(name)))
                 .map(p -> getAdditionalProducts(limit, p, productRepository.findTop10ByNameContaining(name)))
-                .map(p -> truncateProductList(p, limit))
+                .map(p -> sortAndTruncateProductList(p, limit))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -74,7 +74,7 @@ public class FoodLiveSearchService {
                 .map(this::getSortedDTOs)
                 .map(p -> getAdditionalProducts(limit, p, productRepository.findByTranslatedNameStartsWith(name)))
                 .map(p -> getAdditionalProducts(limit, p, productRepository.findTop10ByTranslatedNameContaining(name)))
-                .map(p -> truncateProductList(p, limit))
+                .map(p -> sortAndTruncateProductList(p, limit))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -108,8 +108,9 @@ public class FoodLiveSearchService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    private List<ProductDTO> truncateProductList(List<ProductDTO> products, int limit) {
+    private List<ProductDTO> sortAndTruncateProductList(List<ProductDTO> products, int limit) {
         return products.stream()
+                .sorted(Comparator.comparingLong(ProductDTO::getHits).reversed())
                 .limit(limit)
                 .collect(Collectors.toList());
     }
