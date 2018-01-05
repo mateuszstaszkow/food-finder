@@ -33,12 +33,6 @@ public class DishService {
         return liveSearchService.getDishes(name, LIVE_SEARCH_PAGE_SIZE);
     }
 
-    public List<DishDTO> getDishList(Pageable pageable) {
-        return Optional.ofNullable(dishRepository.findAll(pageable))
-                .map(dishMapper::dishListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
     public DishDTO getDish(Long id) {
         return Optional.ofNullable(dishRepository.findOne(id))
                 .map(dishMapper::toDto)
@@ -49,6 +43,7 @@ public class DishService {
         Dish dishEntity = Optional.ofNullable(dish)
                 .map(dishMapper::toEntity)
                 .orElseThrow(BadRequestException::new);
+        dishEntity.setHits(0L);
         dishRepository.save(dishEntity);
     }
 
@@ -58,5 +53,11 @@ public class DishService {
                 .orElseThrow(BadRequestException::new);
         dishEntity.setId(id);
         dishRepository.save(dishEntity);
+    }
+
+    private List<DishDTO> getDishList(Pageable pageable) {
+        return Optional.ofNullable(dishRepository.findAll(pageable))
+                .map(dishMapper::dishListToDto)
+                .orElseThrow(NotFoundException::new);
     }
 }

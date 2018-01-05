@@ -33,12 +33,6 @@ public class ProductService {
         return liveSearchService.getProducts(name, LIVE_SEARCH_PAGE_SIZE);
     }
 
-    public List<ProductDTO> getProductList(Pageable pageable) {
-        return Optional.ofNullable(productRepository.findAll(pageable))
-                .map(foodMapper::productListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
     public ProductDTO getProduct(Long id) {
         return Optional.ofNullable(productRepository.findById(id))
                 .map(foodMapper::toDto)
@@ -49,6 +43,7 @@ public class ProductService {
         Product productEntity = Optional.ofNullable(product)
                 .map(foodMapper::toEntity)
                 .orElseThrow(BadRequestException::new);
+        productEntity.setHits(0L);
         productRepository.save(productEntity);
     }
 
@@ -58,5 +53,11 @@ public class ProductService {
                 .orElseThrow(BadRequestException::new);
         productEntity.setId(id);
         productRepository.save(productEntity);
+    }
+
+    private List<ProductDTO> getProductList(Pageable pageable) {
+        return Optional.ofNullable(productRepository.findAll(pageable))
+                .map(foodMapper::productListToDto)
+                .orElseThrow(NotFoundException::new);
     }
 }

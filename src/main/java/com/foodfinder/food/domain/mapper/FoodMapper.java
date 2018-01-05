@@ -84,6 +84,10 @@ public class FoodMapper {
         product.setWeight( productDTO.getWeight() );
         product.setMeasure( productDTO.getMeasure() );
         product.setComposition( compositionDTOListToCompositionSet( productDTO.getComposition() ) );
+        product.setProtein( toEntity(productDTO.getProtein()) );
+        product.setCarbohydrates( toEntity(productDTO.getCarbohydrates()) );
+        product.setFat( toEntity(productDTO.getFat()) );
+        product.setEnergy( toEntity(productDTO.getEnergy()) );
         product.setHits( productDTO.getHits() );
         if(foodTranslationService.isPolishLanguage()) {
             product.setTranslatedName( productDTO.getName() );
@@ -107,6 +111,10 @@ public class FoodMapper {
         productDTO.setComposition( compositionSetToDto( product.getComposition() ) );
         productDTO.setFoodGroup( toDto( product.getFoodGroup() ) );
         productDTO.setHits( product.getHits() );
+        productDTO.setProtein( toDto(product.getProtein()) );
+        productDTO.setCarbohydrates( toDto(product.getCarbohydrates()) );
+        productDTO.setFat( toDto(product.getFat()) );
+        productDTO.setEnergy( toDto(product.getEnergy()) );
         if(foodTranslationService.isPolishLanguage()) {
             productDTO.setName( product.getTranslatedName() );
         } else {
@@ -219,7 +227,7 @@ public class FoodMapper {
         return list;
     }
 
-    public List<CompositionDTO> compositionSetToDto(Set<Composition> compositionList) {
+    private List<CompositionDTO> compositionSetToDto(Set<Composition> compositionList) {
         if ( compositionList == null ) {
             return null;
         }
@@ -232,20 +240,7 @@ public class FoodMapper {
         return list;
     }
 
-    public List<Composition> compositionDTOListToCompositionList(List<CompositionDTO> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Composition> dbList = new ArrayList<>(list.size());
-        for ( CompositionDTO compositionDTO : list ) {
-            dbList.add( toEntity( compositionDTO ) );
-        }
-
-        return dbList;
-    }
-
-    public Set<Composition> compositionDTOListToCompositionSet(List<CompositionDTO> list) {
+    private Set<Composition> compositionDTOListToCompositionSet(List<CompositionDTO> list) {
         if ( list == null ) {
             return null;
         }

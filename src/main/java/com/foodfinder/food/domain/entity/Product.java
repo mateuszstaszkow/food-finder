@@ -20,7 +20,7 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", unique = true, nullable = false, length = 200)
+    @Column(name = "name", length = 200)
     private String name;
 
     @Column(name = "weight")
@@ -28,6 +28,22 @@ public class Product implements Serializable {
 
     @Column(name = "measure", length = 100)
     private String measure;
+
+    @JoinColumn(name = "protein", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Composition protein;
+
+    @JoinColumn(name = "carbohydrates", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Composition carbohydrates;
+
+    @JoinColumn(name = "fat", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Composition fat;
+
+    @JoinColumn(name = "energy", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Composition energy;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Composition> composition;
@@ -41,7 +57,7 @@ public class Product implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE)
     private FoodGroup foodGroup;
 
-    @Column(name = "hits")
+    @Column(name = "hits", columnDefinition="BIGINT(20) DEFAULT 0")
     private Long hits;
 
     @Column(name = "name_pl", length = 200)

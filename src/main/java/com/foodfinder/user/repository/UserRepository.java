@@ -11,8 +11,6 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findById(Long id);
-
     User findByEmail(String email);
 
     @Query("SELECT u.days FROM user u WHERE u.id = ?1")

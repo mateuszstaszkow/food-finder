@@ -51,7 +51,7 @@ class ProductsMigrator {
     }
 
     private void logStatus(Long start) {
-        Float duration = (new Date().getTime() - start)/ (float) 1000;
+        Float duration = (new Date().getTime() - start) / (float) 1000;
         log.info("Products count:" + productRepository.count() + ", time: " + duration + " s");
     }
 
