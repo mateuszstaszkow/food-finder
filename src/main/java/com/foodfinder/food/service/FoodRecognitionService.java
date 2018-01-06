@@ -1,5 +1,6 @@
 package com.foodfinder.food.service;
 
+import com.foodfinder.day.service.HitsService;
 import com.foodfinder.food.domain.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 public class FoodRecognitionService {
 
     private final FoodLiveSearchService liveSearchService;
+    private final HitsService hitsService;
 
     private static final int FEATURE_MAX_RESULTS = 5;
     private static final int MAX_FILE_SIZE = 128000;
@@ -46,7 +48,9 @@ public class FoodRecognitionService {
         String base64EncodedGraphic = encodeToBase64(file);
         GoogleVisionMainRequestDTO request = buildRequest(base64EncodedGraphic);
         List<GoogleVisionLabelAnnotationDTO> recognitionData = getRecognitionData(buildUri(), request);
-        return findBestMatchingProduct(recognitionData);
+        ProductDTO recognizedProduct = findBestMatchingProduct(recognitionData);
+        hitsService.incrementHitsAndSave(recognizedProduct);
+        return recognizedProduct;
     }
 
     private String encodeToBase64(MultipartFile file) {
@@ -91,7 +95,7 @@ public class FoodRecognitionService {
             return deeperMatching(recognitionData);
         }
 
-        List<ProductDTO> products = liveSearchService.getProducts(productName, LIVE_SEARCH_PAGE_SIZE);
+        List<ProductDTO> products = liveSearchService.getOriginalProducts(productName, LIVE_SEARCH_PAGE_SIZE);
         List<ProductDTO> filteredProducts = products.stream()
                 .filter(product -> isAProperName(product, productName))
                 .collect(Collectors.toList());
@@ -115,7 +119,7 @@ public class FoodRecognitionService {
                 .map(GoogleVisionLabelAnnotationDTO::getDescription)
                 .filter(description -> !isNameBanned(description))
                 .forEach(productName -> {
-                    products.addAll(liveSearchService.getProducts(productName, LIVE_SEARCH_PAGE_SIZE));
+                    products.addAll(liveSearchService.getOriginalProducts(productName, LIVE_SEARCH_PAGE_SIZE));
                     filteredProducts.addAll(products.stream()
                             .filter(product -> isAProperName(product, productName))
                             .collect(Collectors.toList()));

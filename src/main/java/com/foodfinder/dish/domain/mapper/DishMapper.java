@@ -35,7 +35,6 @@ public class DishMapper {
 
         dish.setId( dishDTO.getId() );
         dish.setProducts( foodMapper.productListToEntitySet( dishDTO.getProducts() ) );
-        dish.setHits( dishDTO.getHits() );
         if(foodTranslationService.isPolishLanguage()) {
             dish.setTranslatedName( dishDTO.getName() );
             dish.setTranslatedDescription( dishDTO.getDescription() );
@@ -56,7 +55,6 @@ public class DishMapper {
 
         dishDTO.setId( dish.getId() );
         dishDTO.setProducts( foodMapper.productListToDto( dish.getProducts() ) );
-        dishDTO.setHits( dish.getHits() );
         if(foodTranslationService.isPolishLanguage()) {
             dishDTO.setName( dish.getTranslatedName() );
             dishDTO.setDescription( dish.getDescription() );

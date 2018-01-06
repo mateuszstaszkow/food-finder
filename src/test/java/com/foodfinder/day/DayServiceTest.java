@@ -7,6 +7,7 @@ import com.foodfinder.day.domain.entity.TimedDish;
 import com.foodfinder.day.domain.mapper.DayMapper;
 import com.foodfinder.day.repository.DayRepository;
 import com.foodfinder.day.service.DayService;
+import com.foodfinder.day.service.HitsService;
 import com.foodfinder.utils.RestControllerTestUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,9 @@ public class DayServiceTest {
     @MockBean
     private DayMapper dayMapper;
 
+    @MockBean
+    private HitsService hitsService;
+
     private DayService dayService;
     private PageRequest defaultPageRequest;
     private Day day;
@@ -45,7 +49,7 @@ public class DayServiceTest {
 
     @Before
     public void setup() {
-        dayService = new DayService(dayRepository, dayMapper);
+        dayService = new DayService(dayRepository, dayMapper, hitsService);
         defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
 
         day = Day.builder()

@@ -6,6 +6,7 @@ import com.foodfinder.day.domain.entity.Day;
 import com.foodfinder.day.domain.entity.TimedDish;
 import com.foodfinder.dish.domain.mapper.DishMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface DayMapper {
 
     DayDTO toDto(Day day);
 
+    @Mapping(target = "id", ignore = true)
     TimedDish toEntity(TimedDishDTO timedDishDTO);
 
     TimedDishDTO toDto(TimedDish timedDish);

@@ -52,7 +52,6 @@ public class DishRestControllerTest {
                 .name("Dumplings")
                 .description("Traditional Russian with greaves")
                 .products(Collections.singletonList(new ProductDTO()))
-                .hits(1L)
                 .build();
 
         given(dishService.getDish(1L)).willReturn(dish);
@@ -72,7 +71,6 @@ public class DishRestControllerTest {
                 .name("Dumplings")
                 .description("Traditional Russian with greaves")
                 .products(Collections.singletonList(new ProductDTO()))
-                .hits(1L)
                 .build();
         List<DishDTO> allDishes = Collections.singletonList(dish);
         PageRequest defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
@@ -95,7 +93,6 @@ public class DishRestControllerTest {
                 .name("Dumplings")
                 .description("Traditional Russian with greaves")
                 .products(Collections.singletonList(new ProductDTO()))
-                .hits(1L)
                 .build();
         List<DishDTO> allDishes = Collections.singletonList(dish);
         PageRequest defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
@@ -118,7 +115,6 @@ public class DishRestControllerTest {
                 .name("Dumplings")
                 .description("Traditional Russian with greaves")
                 .products(Collections.singletonList(new ProductDTO()))
-                .hits(1L)
                 .build();
         String jsonDish = new ObjectMapper().writeValueAsString(dish);
 

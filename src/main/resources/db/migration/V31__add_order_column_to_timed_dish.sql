@@ -1,0 +1,1 @@
+ALTER TABLE `timed_dish` ADD `dish_order` INT(11) NOT NULL DEFAULT 1;

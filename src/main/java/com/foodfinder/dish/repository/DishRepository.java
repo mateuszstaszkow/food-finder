@@ -28,4 +28,6 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
     List<Dish> findByTranslatedNameStartsWith(String name);
 
     Dish findByProducts(Product product);
+
+    List<Dish> findByIdIn(List<Long> id);
 }

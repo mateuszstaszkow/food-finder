@@ -46,6 +46,15 @@ public class FoodLiveSearchService {
         return getOriginalFoodGroupsLiveSearch(name, limit);
     }
 
+    public List<ProductDTO> getOriginalProducts(String name, int limit) {
+        return Optional.ofNullable(productRepository.findByNameStartsWithAndIsCondition(name, PRODUCT_TYPE))
+                .map(this::getSortedDTOs)
+                .map(p -> getAdditionalProducts(limit, p, productRepository.findByNameStartsWith(name)))
+                .map(p -> getAdditionalProducts(limit, p, productRepository.findTop10ByNameContaining(name)))
+                .map(p -> sortAndTruncateProductList(p, limit))
+                .orElseThrow(NotFoundException::new);
+    }
+
     private List<FoodGroupDTO> getOriginalFoodGroupsLiveSearch(String name, int limit) {
         return Optional.ofNullable(foodGroupRepository.findTop10ByNameContaining(name))
                 .map(groups -> truncateFoodGroupList(groups, limit))
@@ -57,15 +66,6 @@ public class FoodLiveSearchService {
         return Optional.ofNullable(foodGroupRepository.findTop10ByTranslatedNameContaining(name))
                 .map(groups -> truncateFoodGroupList(groups, limit))
                 .map(foodMapper::foodGroupListToDto)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    private List<ProductDTO> getOriginalProducts(String name, int limit) {
-        return Optional.ofNullable(productRepository.findByNameStartsWithAndIsCondition(name, PRODUCT_TYPE))
-                .map(this::getSortedDTOs)
-                .map(p -> getAdditionalProducts(limit, p, productRepository.findByNameStartsWith(name)))
-                .map(p -> getAdditionalProducts(limit, p, productRepository.findTop10ByNameContaining(name)))
-                .map(p -> sortAndTruncateProductList(p, limit))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -110,7 +110,7 @@ public class FoodLiveSearchService {
 
     private List<ProductDTO> sortAndTruncateProductList(List<ProductDTO> products, int limit) {
         return products.stream()
-                .sorted(Comparator.comparingLong(ProductDTO::getHits).reversed())
+                .sorted(Comparator.comparingLong(p -> foodMapper.toEntity((ProductDTO) p).getHits()).reversed())
                 .limit(limit)
                 .collect(Collectors.toList());
     }

@@ -88,7 +88,6 @@ public class FoodMapper {
         product.setCarbohydrates( toEntity(productDTO.getCarbohydrates()) );
         product.setFat( toEntity(productDTO.getFat()) );
         product.setEnergy( toEntity(productDTO.getEnergy()) );
-        product.setHits( productDTO.getHits() );
         if(foodTranslationService.isPolishLanguage()) {
             product.setTranslatedName( productDTO.getName() );
         } else {
@@ -110,7 +109,6 @@ public class FoodMapper {
         productDTO.setMeasure( product.getMeasure() );
         productDTO.setComposition( compositionSetToDto( product.getComposition() ) );
         productDTO.setFoodGroup( toDto( product.getFoodGroup() ) );
-        productDTO.setHits( product.getHits() );
         productDTO.setProtein( toDto(product.getProtein()) );
         productDTO.setCarbohydrates( toDto(product.getCarbohydrates()) );
         productDTO.setFat( toDto(product.getFat()) );

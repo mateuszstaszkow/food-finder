@@ -17,5 +17,4 @@ public class ProductDTO {
     private CompositionDTO energy;
     private List<CompositionDTO> composition;
     private FoodGroupDTO foodGroup;
-    private Long hits;
 }

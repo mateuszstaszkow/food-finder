@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class TimedDishDTO {
 
-    private Long id;
+    private Integer dishOrder;
     private Date date;
     private DishDTO dish;
 }

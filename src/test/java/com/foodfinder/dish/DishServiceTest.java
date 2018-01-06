@@ -65,7 +65,6 @@ public class DishServiceTest {
                 .name("Dumplings")
                 .description("Traditional Russian with greaves")
                 .products(Collections.singletonList(new ProductDTO()))
-                .hits(1L)
                 .build();
         dishesDTO = Collections.singletonList(dishDTO);
     }

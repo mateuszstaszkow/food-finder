@@ -29,4 +29,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM product p WHERE p.translatedName LIKE CONCAT(?1,'%')")
     List<Product> findByTranslatedNameStartsWith(String name);
+
+    List<Product> findByIdIn(List<Long> id);
 }

@@ -110,7 +110,7 @@ public class DishLiveSearchService {
 
     private List<DishDTO> sortAndTruncateDishList(List<DishDTO> dishes, int limit) {
         return dishes.stream()
-                .sorted(Comparator.comparingLong(DishDTO::getHits).reversed())
+                .sorted(Comparator.comparingLong(d -> dishMapper.toEntity((DishDTO) d).getHits()).reversed())
                 .limit(limit)
                 .collect(Collectors.toList());
     }

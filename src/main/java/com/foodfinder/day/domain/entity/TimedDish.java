@@ -21,6 +21,9 @@ public class TimedDish implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "dish_order", nullable = false)
+    private Integer dishOrder;
+
     @Column(name = "date")
     private Date date;
 
