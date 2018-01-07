@@ -5,6 +5,7 @@ import com.foodfinder.day.domain.entity.Day;
 import com.foodfinder.day.domain.entity.TimedDish;
 import com.foodfinder.day.domain.mapper.DayMapper;
 import com.foodfinder.day.repository.DayRepository;
+import com.foodfinder.user.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,7 @@ public class DayService {
     private final DayRepository dayRepository;
     private final DayMapper dayMapper;
     private final HitsService hitsService;
+    private final AccountService accountService;
 
     @Value("${food-finder.date-format}")
     private String dateFormat;
@@ -46,11 +48,17 @@ public class DayService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public void postDay(DayDTO day) {
+    public void postDay(DayDTO day, Boolean personal) {
         Day dayEntity = Optional.ofNullable(day)
                 .map(dayMapper::toEntity)
                 .orElseThrow(BadRequestException::new);
+
         dayEntity = hitsService.incrementHitsForANewDay(dayEntity);
+
+        if(personal) {
+            accountService.addDayToAccount(day);
+        }
+
         dayRepository.save(dayEntity);
     }
 

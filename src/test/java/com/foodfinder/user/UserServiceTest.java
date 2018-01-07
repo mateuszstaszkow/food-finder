@@ -125,18 +125,21 @@ public class UserServiceTest {
 
     @Test
     public void givenDate_whenGetDayList_thenReturnDtoList() throws Exception {
-        given(userRepository.findUserDays(1L)).willReturn(days);
+        given(userRepository.findUserDaysByDateBetween(1L, new Date(-3600000), new Date(82799000))).willReturn(days);
         given(dayMapper.dayListToDto(days)).willReturn(daysDTO);
 
-        assertEquals(userService.getUserDays(1L, new Date(10), null, null), daysDTO);
+        assertEquals(userService.getUserDays(1L, new Date(1000), null, null), daysDTO);
     }
 
     @Test
     public void givenDateFromAndTo_whenGetDayList_thenReturnDtoList() throws Exception {
-        given(userRepository.findUserDays(1L)).willReturn(days);
+        Date from = new Date(0);
+        Date to = new Date(1000);
+
+        given(userRepository.findUserDaysByDateBetween(1L, from, to)).willReturn(days);
         given(dayMapper.dayListToDto(days)).willReturn(daysDTO);
 
-        assertEquals(userService.getUserDays(1L, null, new Date(0), new Date(1000)), daysDTO);
+        assertEquals(userService.getUserDays(1L, null, from, to), daysDTO);
     }
 
 

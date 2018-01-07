@@ -40,8 +40,9 @@ class DayRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addDay(@RequestBody DayDTO dayDTO) {
-        dayService.postDay(dayDTO);
+    public void addDay(@RequestBody DayDTO dayDTO,
+                       @RequestParam(value="personal", required = false, defaultValue = "true") Boolean personal) {
+        dayService.postDay(dayDTO, personal);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

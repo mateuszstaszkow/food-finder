@@ -15,11 +15,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = DayMapper.class)
 public interface UserMapper {
 
-    @Mappings({
-            @Mapping(target = "password", ignore = true),
-            @Mapping(target = "enabled", ignore = true),
-            @Mapping(target = "id", ignore = true)
-    })
+    @Mapping(target = "password", ignore = true)
     User toEntity(UserDTO userDTO);
 
     @Mappings({

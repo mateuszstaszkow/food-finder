@@ -14,9 +14,11 @@ import java.util.List;
 @Builder
 public class UserDTO {
 
+    private Long id;
     private String name;
     private String surname;
     private String email;
+    private Boolean enabled;
     private Float weight;
     private Float height;
     private int age;
