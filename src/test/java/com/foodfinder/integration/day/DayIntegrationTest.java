@@ -56,7 +56,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
                 .getResponse()
                 .getContentAsString();
         List<ProductDTO> products = mapper.readValue(result, new TypeReference<List<ProductDTO>>(){});
-        DayDTO day = DayBuilder.getDay(products, dayId, dishId);
+        DayDTO day = DayBuilder.getDayDTO(products, dayId, dishId);
         String jsonDay = new ObjectMapper().writeValueAsString(day);
 
         mockMvc.perform(post("/api/days")
@@ -72,7 +72,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
                 .getResponse()
                 .getContentAsString();
         List<ProductDTO> products = mapper.readValue(result, new TypeReference<List<ProductDTO>>(){});
-        DayDTO day = DayBuilder.getDay(products, 1L, 1L);
+        DayDTO day = DayBuilder.getDayDTO(products, 1L, 1L);
         String jsonDay = new ObjectMapper().writeValueAsString(day);
 
         mockMvc.perform(post("/api/days")

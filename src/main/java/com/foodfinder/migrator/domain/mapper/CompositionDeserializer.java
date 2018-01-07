@@ -28,8 +28,8 @@ public class CompositionDeserializer extends StdDeserializer<CompositionResponse
         String unit = node.get("unit").asText();
         String textValue = node.get("value").asText();
         String textGm = node.get("gm").asText();
-        Float value = textValue.equals(BAD_RESPONSE) ? -1f : Float.valueOf(textValue);
-        Float gm = textGm.equals(BAD_RESPONSE) ? -1f : Float.valueOf(textGm);
+        Float value = textValue.equals(BAD_RESPONSE) ? 0f : Float.valueOf(textValue);
+        Float gm = textGm.equals(BAD_RESPONSE) ? 0f : Float.valueOf(textGm);
 
         return CompositionResponseDTO.builder()
                 .nutrient_id(nutrient_id)
