@@ -44,7 +44,7 @@ public class DiagnosticRestControllerTest {
     private ExceptionRestController exceptionRestController;
 
     @Test
-    @WithMockUser("VIEW_ADMIN")
+    @WithMockUser
     public void givenDiagnostic_whenGetDiagnostic_thenReturnJson() throws Exception {
 
         DiagnosticDTO diagnostic = DiagnosticDTO.builder()
@@ -64,7 +64,7 @@ public class DiagnosticRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_ADMIN")
+    @WithMockUser
     public void givenDiagnostics_whenGetDiagnostics_thenReturnJsonArray() throws Exception {
 
         DiagnosticDTO diagnostic = DiagnosticDTO.builder()
@@ -87,7 +87,7 @@ public class DiagnosticRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_ADMIN")
+    @WithMockUser
     public void givenDiagnostic_whenAddDiagnostic_thenReturnStatusCreated() throws Exception {
 
         DiagnosticDTO diagnostic = DiagnosticDTO.builder()

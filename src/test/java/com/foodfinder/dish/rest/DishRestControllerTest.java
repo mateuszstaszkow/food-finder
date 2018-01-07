@@ -44,7 +44,7 @@ public class DishRestControllerTest {
     private ExceptionRestController exceptionRestController;
 
     @Test
-    @WithMockUser("VIEW_DISHES")
+    @WithMockUser
     public void givenDish_whenGetDish_thenReturnJson() throws Exception {
 
         DishDTO dish = DishDTO.builder()
@@ -63,7 +63,7 @@ public class DishRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_DISHES")
+    @WithMockUser
     public void givenDishes_whenGetDishes_thenReturnJsonArray() throws Exception {
 
         DishDTO dish = DishDTO.builder()
@@ -85,7 +85,7 @@ public class DishRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_DISHES")
+    @WithMockUser
     public void givenDishesName_whenGetDishes_thenReturnJsonArray() throws Exception {
 
         DishDTO dish = DishDTO.builder()
@@ -107,7 +107,7 @@ public class DishRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_DISHES")
+    @WithMockUser
     public void givenDish_whenAddDish_thenReturnStatusCreated() throws Exception {
 
         DishDTO dish = DishDTO.builder()

@@ -49,7 +49,7 @@ public class DayRestControllerTest {
     private ExceptionRestController exceptionRestController;
 
     @Test
-    @WithMockUser("VIEW_DAYS")
+    @WithMockUser
     public void givenDay_whenGetDay_thenReturnJson() throws Exception {
 
         DayDTO day = DayDTO.builder()
@@ -68,7 +68,7 @@ public class DayRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_DAYS")
+    @WithMockUser
     public void givenDays_whenGetDaysNoPersonal_thenReturnJsonArray() throws Exception {
 
         DayDTO day = DayDTO.builder()
@@ -90,7 +90,7 @@ public class DayRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_DAYS")
+    @WithMockUser
     public void givenDays_whenGetDays_thenReturnJsonArray() throws Exception {
 
         DayDTO day = DayDTO.builder()
@@ -111,7 +111,7 @@ public class DayRestControllerTest {
     }
 
     @Test
-    @WithMockUser("VIEW_DAYS")
+    @WithMockUser
     public void givenDay_whenAddDay_thenReturnStatusCreated() throws Exception {
 
         DayDTO day = DayDTO.builder()

@@ -66,8 +66,6 @@ dependencies {
     testCompile("org.springframework.security:spring-security-test")
     testCompile("com.jayway.jsonpath:json-path")
     testCompile("com.h2database:h2:1.4.196")
-    testCompile("org.codehaus.groovy:groovy-all:2.4.13")
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4")
 }
 
 compileJava {
