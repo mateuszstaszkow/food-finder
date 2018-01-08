@@ -69,6 +69,22 @@ public class DishIntegrationTest extends IntegrationTestSetup {
                 .andExpect(jsonPath("$.name", is(dish.getName())));
     }
 
+    @Test
+    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    public void givenDish_whenGetDishByName_thenReturnsDishArray() throws Exception {
+        DishDTO dish = getDishWithProductsFromDb(null);
+        String jsonDish = new ObjectMapper().writeValueAsString(dish);
+
+        mockMvc.perform(post("/api/dishes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonDish))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/api/dishes?name=Dump"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name", is(dish.getName())));
+    }
+
     private DishDTO getDishWithProductsFromDb(Long id) throws Exception {
         String result = mockMvc.perform(get("/api/products?page=0&size=10")
                 .contentType(MediaType.APPLICATION_JSON))
