@@ -21,8 +21,8 @@ import java.util.Optional;
 public class FoodGroupService {
 
     private final FoodGroupRepository foodGroupRepository;
-    private final FoodMapper foodMapper;
     private final FoodLiveSearchService liveSearchService;
+    private final FoodMapper foodMapper;
 
     private static final int LIVE_SEARCH_PAGE_SIZE = 10;
 
@@ -34,7 +34,7 @@ public class FoodGroupService {
     }
 
     public FoodGroupDTO getFoodGroup(Long id) {
-        return Optional.ofNullable(foodGroupRepository.findById(id))
+        return Optional.ofNullable(foodGroupRepository.findOne(id))
                 .map(foodMapper::toDto)
                 .orElseThrow(NotFoundException::new);
     }

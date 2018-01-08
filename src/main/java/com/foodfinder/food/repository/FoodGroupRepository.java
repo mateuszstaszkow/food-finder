@@ -11,8 +11,6 @@ public interface FoodGroupRepository extends JpaRepository<FoodGroup, Long> {
 
     FoodGroup findByName(String description);
 
-    FoodGroup findById(Long id);
-
     List<FoodGroup> findTop10ByNameContaining(String name);
 
     List<FoodGroup> findTop10ByTranslatedNameContaining(String name);

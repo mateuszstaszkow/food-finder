@@ -11,4 +11,8 @@ public class FoodGroupDTO {
 
     private Long id;
     private String name;
+
+    public FoodGroupDTO(Long id) {
+        this.id = id;
+    }
 }

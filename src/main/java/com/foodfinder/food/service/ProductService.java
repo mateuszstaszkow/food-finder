@@ -34,7 +34,7 @@ public class ProductService {
     }
 
     public ProductDTO getProduct(Long id) {
-        return Optional.ofNullable(productRepository.findById(id))
+        return Optional.ofNullable(productRepository.findOne(id))
                 .map(foodMapper::toDto)
                 .orElseThrow(NotFoundException::new);
     }
