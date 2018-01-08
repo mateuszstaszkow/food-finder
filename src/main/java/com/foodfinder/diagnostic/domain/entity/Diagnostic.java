@@ -17,7 +17,7 @@ import java.util.Date;
 public class Diagnostic implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "message", length = 1000)

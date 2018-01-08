@@ -16,19 +16,19 @@ CREATE TABLE `day` (
 ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diagnostic` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `exception` varchar(1000) DEFAULT NULL,
   `message` varchar(1000) DEFAULT NULL,
   `comments` varchar(1000) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `diet` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dish` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -68,10 +68,10 @@ CREATE TABLE `hibernate_sequence` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `privilege` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `product` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -101,10 +101,10 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8489 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `role` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `timed_dish` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -117,7 +117,7 @@ CREATE TABLE `timed_dish` (
 ) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `surname` varchar(50) DEFAULT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
   KEY `fk_user_role` (`role_id`),
   CONSTRAINT `fk_user_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_day` (
   `user_id` bigint(20) NOT NULL,

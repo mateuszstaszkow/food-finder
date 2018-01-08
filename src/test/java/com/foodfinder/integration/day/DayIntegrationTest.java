@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,29 +26,20 @@ public class DayIntegrationTest extends IntegrationTestSetup {
     @Test
     @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
     public void whenGetDays_thenReturnsStatusOk() throws Exception {
-        mockMvc.perform(get("/api/products"))
+        mockMvc.perform(get("/api/days"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
-    public void whenGetPaginatedDays_thenReturnsArray() throws Exception {
-        mockMvc.perform(get("/api/products?page=0&size=" + 10)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(10)));
+    public void givenProductsAndDay_whenPostDay_thenReturnsStatusCreated() throws Exception {
+        givenProductsAndDay_whenPostDay_thenReturnsStatusCreated(1L, 1L);
+        givenProductsAndDay_whenPostDay_thenReturnsStatusCreated(null, null);
+        givenProductsAndDay_whenPostDay_thenReturnsStatusCreated(3L, null);
+        givenProductsAndDay_whenPostDay_thenReturnsStatusCreated(null, 1L);
     }
 
-    @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
-    public void givenProductsAndDay_whenGetDay_thenReturnsStatusCreated() throws Exception {
-        givenProductsAndDay_whenGetDay_thenReturnsStatusCreated(1L, 1L);
-        givenProductsAndDay_whenGetDay_thenReturnsStatusCreated(null, null);
-        givenProductsAndDay_whenGetDay_thenReturnsStatusCreated(3L, null);
-        givenProductsAndDay_whenGetDay_thenReturnsStatusCreated(null, 1L);
-    }
-
-    private void givenProductsAndDay_whenGetDay_thenReturnsStatusCreated(Long dayId, Long dishId) throws Exception {
+    private void givenProductsAndDay_whenPostDay_thenReturnsStatusCreated(Long dayId, Long dishId) throws Exception {
         String result = mockMvc.perform(get("/api/products?page=0&size=10")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn()
@@ -65,6 +55,8 @@ public class DayIntegrationTest extends IntegrationTestSetup {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
     public void givenProductsAndDay_whenGetDay_thenReturnsDay() throws Exception {
         String result = mockMvc.perform(get("/api/products?page=0&size=10")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -72,7 +64,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
                 .getResponse()
                 .getContentAsString();
         List<ProductDTO> products = mapper.readValue(result, new TypeReference<List<ProductDTO>>(){});
-        DayDTO day = DayBuilder.getDayDTO(products, 1L, 1L);
+        DayDTO day = DayBuilder.getDayDTO(products, 5L, 1L);
         String jsonDay = new ObjectMapper().writeValueAsString(day);
 
         mockMvc.perform(post("/api/days")
