@@ -141,6 +141,4 @@ public class UserServiceTest {
 
         assertEquals(userService.getUserDays(1L, null, from, to), daysDTO);
     }
-
-
 }

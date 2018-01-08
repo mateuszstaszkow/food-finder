@@ -26,8 +26,8 @@ class AccountRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addUser(@RequestBody BasicUserDTO userDTO) {
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUser(@RequestBody BasicUserDTO userDTO) {
         accountService.updateAccount(userDTO);
     }
 
