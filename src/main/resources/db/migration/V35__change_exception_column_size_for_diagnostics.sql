@@ -1,0 +1,1 @@
+ALTER TABLE `diagnostic` MODIFY `exception` varchar(4000) DEFAULT NULL;

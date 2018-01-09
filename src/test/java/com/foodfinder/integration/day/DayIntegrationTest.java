@@ -74,7 +74,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
 
         mockMvc.perform(get("/api/days/" + day.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(day.getName())))
+                .andExpect(jsonPath("$.id", is(day.getId().intValue())))
                 .andExpect(jsonPath("$.timedDishes[0].dish.name",
                         is(day.getTimedDishes().get(0).getDish().getName())))
                 .andExpect(jsonPath("$.timedDishes[0].dish.products[0].fat.name",

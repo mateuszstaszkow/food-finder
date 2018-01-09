@@ -57,7 +57,7 @@ public class DishMapper {
         dishDTO.setProducts( foodMapper.productListToDto( dish.getProducts() ) );
         if(foodTranslationService.isPolishLanguage()) {
             dishDTO.setName( dish.getTranslatedName() );
-            dishDTO.setDescription( dish.getDescription() );
+            dishDTO.setDescription( dish.getTranslatedDescription() );
         } else {
             dishDTO.setName( dish.getName() );
             dishDTO.setDescription( dish.getDescription() );

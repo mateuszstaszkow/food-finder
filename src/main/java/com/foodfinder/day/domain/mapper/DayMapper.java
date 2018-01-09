@@ -15,6 +15,7 @@ import java.util.Set;
 @Mapper(componentModel = "spring", uses = DishMapper.class)
 public interface DayMapper {
 
+    @Mapping(target = "name", ignore = true)
     Day toEntity(DayDTO dayDTO);
 
     DayDTO toDto(Day day);

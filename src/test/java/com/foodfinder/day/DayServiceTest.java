@@ -8,7 +8,6 @@ import com.foodfinder.day.domain.mapper.DayMapper;
 import com.foodfinder.day.repository.DayRepository;
 import com.foodfinder.day.service.DayService;
 import com.foodfinder.day.service.HitsService;
-import com.foodfinder.user.service.AccountService;
 import com.foodfinder.utils.RestControllerTestUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,9 +39,6 @@ public class DayServiceTest {
     @MockBean
     private HitsService hitsService;
 
-    @MockBean
-    private AccountService accountService;
-
     private DayService dayService;
     private PageRequest defaultPageRequest;
     private Day day;
@@ -53,7 +49,7 @@ public class DayServiceTest {
 
     @Before
     public void setup() {
-        dayService = new DayService(dayRepository, dayMapper, hitsService, accountService);
+        dayService = new DayService(dayRepository, dayMapper, hitsService);
         defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
 
         day = Day.builder()
@@ -67,7 +63,6 @@ public class DayServiceTest {
 
         dayDTO = DayDTO.builder()
                 .id(1L)
-                .name("Monday")
                 .date(new Date(0))
                 .timedDishes(Collections.singletonList(new TimedDishDTO()))
                 .build();

@@ -5,6 +5,7 @@ import com.foodfinder.day.domain.dto.TimedDishDTO;
 import com.foodfinder.day.domain.entity.Day;
 import com.foodfinder.day.domain.entity.TimedDish;
 import com.foodfinder.day.domain.mapper.DayMapper;
+import com.foodfinder.day.service.DayService;
 import com.foodfinder.user.domain.dto.RoleDTO;
 import com.foodfinder.user.domain.dto.UserDTO;
 import com.foodfinder.user.domain.entity.Role;
@@ -39,6 +40,9 @@ public class UserServiceTest {
     @MockBean
     private DayMapper dayMapper;
 
+    @MockBean
+    private DayService dayService;
+
     private UserService userService;
     private PageRequest defaultPageRequest;
     private User user;
@@ -50,7 +54,7 @@ public class UserServiceTest {
 
     @Before
     public void setup() {
-        userService = new UserService(userRepository, userMapper, dayMapper);
+        userService = new UserService(userRepository, userMapper, dayMapper, dayService);
         defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
 
         user = User.builder()
@@ -92,7 +96,6 @@ public class UserServiceTest {
 
         DayDTO dayDTO = DayDTO.builder()
                 .id(1L)
-                .name("Monday")
                 .date(new Date(10))
                 .timedDishes(Collections.singletonList(new TimedDishDTO()))
                 .build();
@@ -120,15 +123,15 @@ public class UserServiceTest {
         given(userRepository.findUserDays(1L)).willReturn(days);
         given(dayMapper.dayListToDto(days)).willReturn(daysDTO);
 
-        assertEquals(userService.getUserDays(1L, null, null, null), daysDTO);
+        assertEquals(userService.getUserDays(1L, null, null), daysDTO);
     }
 
     @Test
     public void givenDate_whenGetDayList_thenReturnDtoList() throws Exception {
-        given(userRepository.findUserDaysByDateBetween(1L, new Date(-3600000), new Date(82799000))).willReturn(days);
+        given(userRepository.findUserDaysByDateBetween(1L, new Date(0), new Date(1000))).willReturn(days);
         given(dayMapper.dayListToDto(days)).willReturn(daysDTO);
 
-        assertEquals(userService.getUserDays(1L, new Date(1000), null, null), daysDTO);
+        assertEquals(userService.getUserDays(1L, new Date(0), new Date(1000)), daysDTO);
     }
 
     @Test
@@ -139,6 +142,6 @@ public class UserServiceTest {
         given(userRepository.findUserDaysByDateBetween(1L, from, to)).willReturn(days);
         given(dayMapper.dayListToDto(days)).willReturn(daysDTO);
 
-        assertEquals(userService.getUserDays(1L, null, from, to), daysDTO);
+        assertEquals(userService.getUserDays(1L,  from, to), daysDTO);
     }
 }

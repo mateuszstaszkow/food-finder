@@ -2,7 +2,6 @@ package com.foodfinder.day.rest;
 
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.service.DayService;
-import com.foodfinder.user.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,6 @@ import java.util.List;
 class DayRestController {
 
     private final DayService dayService;
-    private final AccountService accountService;
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -29,20 +27,15 @@ class DayRestController {
                                    @RequestParam(value="from", required = false)
                                        @DateTimeFormat(pattern="yyyy-MM-dd") Date from,
                                    @RequestParam(value="to", required = false)
-                                       @DateTimeFormat(pattern="yyyy-MM-dd") Date to,
-                                   @RequestParam(value="personal", required = false, defaultValue = "true") Boolean personal) {
+                                       @DateTimeFormat(pattern="yyyy-MM-dd") Date to) {
 
-        if(personal) {
-            return accountService.getAccountDays(date, from, to);
-        }
         return dayService.getDayList(pageable, date, from, to);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addDay(@RequestBody DayDTO dayDTO,
-                       @RequestParam(value="personal", required = false, defaultValue = "true") Boolean personal) {
-        dayService.postDay(dayDTO, personal);
+    public void addDay(@RequestBody DayDTO dayDTO) {
+        dayService.postDay(dayDTO);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

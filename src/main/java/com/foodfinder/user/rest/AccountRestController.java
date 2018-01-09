@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -33,12 +34,21 @@ class AccountRestController {
 
     @RequestMapping(value = "/days", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<DayDTO> getUserDays(@RequestParam(value="date", required = false)
-                                    @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
-                                    @RequestParam(value="from", required = false)
+    public List<DayDTO> getUserDays(@RequestParam(value="from", required = false)
                                     @DateTimeFormat(pattern="yyyy-MM-dd") Date from,
                                     @RequestParam(value="to", required = false)
                                     @DateTimeFormat(pattern="yyyy-MM-dd") Date to) {
-        return accountService.getAccountDays(date, from, to);
+        return accountService.getAccountDays(from, to);
+    }
+
+    @RequestMapping(value = "/days", method = RequestMethod.POST)
+    public ResponseEntity<?> postOrUpdateUserDay(@RequestBody DayDTO dayDTO) {
+        return accountService.addOrUpdateAccountDay(dayDTO);
+    }
+
+    @RequestMapping(value = "/days/{date}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public DayDTO getUserDays(@PathVariable("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+        return accountService.getAccountDays(date);
     }
 }

@@ -54,7 +54,6 @@ public class DayRestControllerTest {
 
         DayDTO day = DayDTO.builder()
                 .id(1L)
-                .name("Monday")
                 .date(new Date(0))
                 .timedDishes(Collections.singletonList(new TimedDishDTO()))
                 .build();
@@ -64,29 +63,7 @@ public class DayRestControllerTest {
         mvc.perform(get("/api/days/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(day.getName())));
-    }
-
-    @Test
-    @WithMockUser
-    public void givenDays_whenGetDaysNoPersonal_thenReturnJsonArray() throws Exception {
-
-        DayDTO day = DayDTO.builder()
-                .id(1L)
-                .name("Monday")
-                .date(new Date(0))
-                .timedDishes(Collections.singletonList(new TimedDishDTO()))
-                .build();
-        List<DayDTO> allDays = Collections.singletonList(day);
-        PageRequest defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
-
-        given(dayService.getDayList(defaultPageRequest,null,null,null)).willReturn(allDays);
-
-        mvc.perform(get("/api/days?personal=false")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(day.getName())));
+                .andExpect(jsonPath("$.id", is(day.getId().intValue())));
     }
 
     @Test
@@ -95,19 +72,19 @@ public class DayRestControllerTest {
 
         DayDTO day = DayDTO.builder()
                 .id(1L)
-                .name("Monday")
                 .date(new Date(0))
                 .timedDishes(Collections.singletonList(new TimedDishDTO()))
                 .build();
         List<DayDTO> allDays = Collections.singletonList(day);
+        PageRequest defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
 
-        given(accountService.getAccountDays(null,null,null)).willReturn(allDays);
+        given(dayService.getDayList(defaultPageRequest,null,null,null)).willReturn(allDays);
 
         mvc.perform(get("/api/days")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(day.getName())));
+                .andExpect(jsonPath("$[0].id", is(day.getId().intValue())));
     }
 
     @Test
@@ -116,7 +93,6 @@ public class DayRestControllerTest {
 
         DayDTO day = DayDTO.builder()
                 .id(1L)
-                .name("Monday")
                 .date(new Date(0))
                 .timedDishes(Collections.singletonList(new TimedDishDTO()))
                 .build();

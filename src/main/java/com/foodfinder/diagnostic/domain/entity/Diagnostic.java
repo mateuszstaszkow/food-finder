@@ -23,7 +23,7 @@ public class Diagnostic implements Serializable {
     @Column(name = "message", length = 1000)
     private String message;
 
-    @Column(name = "exception", length = 1000)
+    @Column(name = "exception", length = 4000)
     private String exception;
 
     @Column(name = "comments", length = 1000)

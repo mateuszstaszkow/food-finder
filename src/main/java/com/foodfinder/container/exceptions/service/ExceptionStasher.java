@@ -19,15 +19,16 @@ public class ExceptionStasher {
     private final DiagnosticRepository diagnosticRepository;
 
     private static final String EXCEPTION_FILEPATH = "exception.json";
+    private static final Integer MAX_STACK_TRACE_LENGTH = 200;
 
     public void stash(Exception exception, String comments) {
-        if(exception == null) {
+        if(exception == null || exception.getCause() == null) {
             return;
         }
 
         Diagnostic documentedException = Diagnostic.builder()
-                .message(exception.getMessage())
-                .exception(getStacktrace(exception))
+                .message(exception.getMessage() + ": " + exception.getCause().getMessage())
+                .exception(getStacktrace(exception).substring(0, MAX_STACK_TRACE_LENGTH))
                 .comments(comments)
                 .date(new Date())
                 .build();

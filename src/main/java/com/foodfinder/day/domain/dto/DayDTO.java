@@ -15,7 +15,6 @@ import java.util.List;
 public class DayDTO {
 
     private Long id;
-    private String name;
     private Date date;
     private List<TimedDishDTO> timedDishes;
 }

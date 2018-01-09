@@ -17,7 +17,7 @@ CREATE TABLE `day` (
 
 CREATE TABLE `diagnostic` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `exception` varchar(1000) DEFAULT NULL,
+  `exception` varchar(4000) DEFAULT NULL,
   `message` varchar(1000) DEFAULT NULL,
   `comments` varchar(1000) DEFAULT NULL,
   `date` datetime DEFAULT NULL,

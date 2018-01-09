@@ -7,9 +7,9 @@ import com.foodfinder.user.domain.entity.User;
 import com.foodfinder.user.domain.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,19 +31,18 @@ public class AccountService {
         userService.updateBasicUser(loggedUserId, user);
     }
 
-    public List<DayDTO> getAccountDays(Date date, Date from, Date to) {
+    public List<DayDTO> getAccountDays(Date from, Date to) {
         Long loggedUserId = loggedUserGetter.getLoggedUser().getId();
-        return userService.getUserDays(loggedUserId, date, from, to);
+        return userService.getUserDays(loggedUserId, from, to);
     }
 
-    public void addDayToAccount(DayDTO dayDTO) {
-        if(dayDTO == null) {
-            return;
-        }
-        BasicUserDTO loggedUser = getAccount();
-        List<DayDTO> days = loggedUser.getDays() == null ? new ArrayList<>() : loggedUser.getDays();
-        days.add(dayDTO);
-        loggedUser.setDays(days);
-        updateAccount(loggedUser);
+    public DayDTO getAccountDays(Date date) {
+        Long loggedUserId = loggedUserGetter.getLoggedUser().getId();
+        return userService.getUserDay(loggedUserId, date);
+    }
+
+    public ResponseEntity<?> addOrUpdateAccountDay(DayDTO dayDTO) {
+        Long loggedUserId = loggedUserGetter.getLoggedUser().getId();
+        return userService.addOrUpdateUserDay(loggedUserId, dayDTO);
     }
 }

@@ -93,19 +93,35 @@ public class AccountRestControllerTest {
 
         DayDTO dayDTO = DayDTO.builder()
                 .id(1L)
-                .name("Monday")
                 .date(new Date(10))
                 .timedDishes(Collections.singletonList(new TimedDishDTO()))
                 .build();
         List<DayDTO> daysDTO = Collections.singletonList(dayDTO);
 
-        given(accountService.getAccountDays(null, null, null)).willReturn(daysDTO);
+        given(accountService.getAccountDays(null, null)).willReturn(daysDTO);
 
         mvc.perform(get("/api/users/me/days")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(dayDTO.getName())));
+                .andExpect(jsonPath("$[0].id", is(dayDTO.getId().intValue())));
+    }
+
+    @Test
+    @WithMockUser
+    public void givenDay_whenGetAccountDay_thenReturnJson() throws Exception {
+        DayDTO dayDTO = DayDTO.builder()
+                .id(1L)
+                .date(new Date(0))
+                .timedDishes(Collections.singletonList(new TimedDishDTO()))
+                .build();
+
+        given(accountService.getAccountDays(new Date(-3600000))).willReturn(dayDTO);
+
+        mvc.perform(get("/api/users/me/days/1970-01-01")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(dayDTO.getId().intValue())));
     }
 
     @Test

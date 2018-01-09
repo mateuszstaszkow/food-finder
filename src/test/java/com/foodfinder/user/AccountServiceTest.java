@@ -82,15 +82,14 @@ public class AccountServiceTest {
     public void whenGetDayList_thenReturnDtoList() throws Exception {
         DayDTO dayDTO = DayDTO.builder()
                 .id(1L)
-                .name("Monday")
                 .date(new Date(10))
                 .timedDishes(Collections.singletonList(new TimedDishDTO()))
                 .build();
         List<DayDTO> daysDTO = Collections.singletonList(dayDTO);
 
         given(loggedUserGetter.getLoggedUser()).willReturn(account);
-        given(userService.getUserDays(1L, null, null, null)).willReturn(daysDTO);
+        given(userService.getUserDays(1L, null, null)).willReturn(daysDTO);
 
-        assertEquals(accountService.getAccountDays( null, null, null), daysDTO);
+        assertEquals(accountService.getAccountDays( null, null), daysDTO);
     }
 }

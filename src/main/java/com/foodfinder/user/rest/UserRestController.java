@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -47,12 +48,22 @@ class UserRestController {
     @RequestMapping(value = "/{id}/days", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<DayDTO> getUserDays(@PathVariable Long id,
-                                    @RequestParam(value="date", required = false)
-                                        @DateTimeFormat(pattern="yyyy-MM-dd") Date date,
                                     @RequestParam(value="from", required = false)
                                         @DateTimeFormat(pattern="yyyy-MM-dd") Date from,
                                     @RequestParam(value="to", required = false)
                                         @DateTimeFormat(pattern="yyyy-MM-dd") Date to) {
-        return userService.getUserDays(id, date, from, to);
+        return userService.getUserDays(id, from, to);
+    }
+
+    @RequestMapping(value = "/{id}/days", method = RequestMethod.POST)
+    public ResponseEntity<?> postOrUpdateUserDay(@PathVariable Long id, @RequestBody DayDTO dayDTO) {
+        return userService.addOrUpdateUserDay(id, dayDTO);
+    }
+
+    @RequestMapping(value = "/{id}/days/{date}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public DayDTO getUserDays(@PathVariable Long id,
+                                    @PathVariable("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+        return userService.getUserDay(id, date);
     }
 }

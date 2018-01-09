@@ -1,7 +1,6 @@
 package com.foodfinder.integration.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.integration.config.IntegrationTestSetup;
 import com.foodfinder.user.domain.dto.RoleDTO;
 import com.foodfinder.user.domain.dto.UserDTO;
@@ -10,8 +9,6 @@ import org.junit.runner.RunWith;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.Collections;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,7 +39,7 @@ public class UserIntegrationTest extends IntegrationTestSetup {
                 .height(200f)
                 .age(20)
                 .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
+                .days(null)
                 .build();
         String jsonUser = new ObjectMapper().writeValueAsString(user);
 
@@ -65,7 +62,7 @@ public class UserIntegrationTest extends IntegrationTestSetup {
                 .height(200f)
                 .age(20)
                 .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
+                .days(null)
                 .build();
         String jsonUser = new ObjectMapper().writeValueAsString(user);
 
@@ -88,7 +85,7 @@ public class UserIntegrationTest extends IntegrationTestSetup {
                 .height(200f)
                 .age(20)
                 .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
+                .days(null)
                 .build();
         String jsonUser = new ObjectMapper().writeValueAsString(user);
 

@@ -26,7 +26,12 @@ public class RegistrationService {
                 .map(userMapper::toEntity)
                 .map(this::firstUserConfiguration)
                 .orElseThrow(BadRequestException::new);
-        userRepository.save(userEntity);
+
+        try {
+            userRepository.save(userEntity);
+        } catch (Exception exception) {
+            throw new BadRequestException(exception);
+        }
     }
 
     private User firstUserConfiguration(User userEntity) {

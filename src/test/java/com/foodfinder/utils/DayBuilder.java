@@ -19,7 +19,6 @@ public class DayBuilder {
 
         return DayDTO.builder()
                 .id(dayId)
-                .name("Monday")
                 .date(new Date(0))
                 .timedDishes(timedDishes)
                 .build();
