@@ -13,7 +13,7 @@ import javax.ws.rs.BadRequestException;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class RegistrationService {
+public class LoginService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

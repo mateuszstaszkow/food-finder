@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepository userRepository;
+    private final FoodFinderBasicAuthenticationEntryPoint foodFinderBasicAuthenticationEntryPoint;
 
     @Value("${food-finder.prefix}")
     private String foodFinderPrefix;
@@ -57,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .authorizeRequests()
                     .antMatchers("/" + foodFinderPrefix + "/days/**").hasAuthority("VIEW_DAYS")
-                    .antMatchers("/" + foodFinderPrefix + "/diagntostics/**").hasAuthority("VIEW_ADMIN")
+                    .antMatchers("/" + foodFinderPrefix + "/diagnostics/**").hasAuthority("VIEW_ADMIN")
                     .antMatchers("/" + foodFinderPrefix + "/diets/**").hasAuthority("VIEW_DIETS")
                     .antMatchers("/" + foodFinderPrefix + "/dishes/**").hasAuthority("VIEW_DISHES")
                     .antMatchers("/" + foodFinderPrefix + "/groups/**").hasAuthority("VIEW_GROUPS")
@@ -69,9 +70,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/" + foodFinderPrefix + "/users/**").hasAuthority("VIEW_USERS")
                     .antMatchers("/" + foodFinderPrefix + "/roles/**").hasAuthority("VIEW_ROLES")
                     .antMatchers("/" + foodFinderPrefix + "/privileges/**").hasAuthority("VIEW_PRIVILEGES")
-                    .antMatchers("/" + foodFinderPrefix + "/**").authenticated()
+                    .antMatchers("/" + foodFinderPrefix + "/**").fullyAuthenticated()
+                    .antMatchers("/login").fullyAuthenticated()
                     //.antMatchers("/v2/**").hasAuthority("VIEW_ADMIN")
                     //.antMatchers("/swagger-ui.html/**").hasAuthority("VIEW_ADMIN")
+                    .and()
+                .httpBasic()
+                    .authenticationEntryPoint(foodFinderBasicAuthenticationEntryPoint)
                     .and()
                 .addFilter(baseAuthFilter());
     }

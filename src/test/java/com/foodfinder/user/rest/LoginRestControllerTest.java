@@ -3,7 +3,7 @@ package com.foodfinder.user.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foodfinder.container.exceptions.rest.ExceptionRestController;
 import com.foodfinder.user.domain.dto.RegistrationDTO;
-import com.foodfinder.user.service.RegistrationService;
+import com.foodfinder.user.service.LoginService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +19,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(RegistrationRestController.class)
+@WebMvcTest(LoginRestController.class)
 @EnableSpringDataWebSupport
-public class RegistrationRestControllerTest {
+public class LoginRestControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private RegistrationService registrationService;
+    private LoginService loginService;
 
     @MockBean
     private ExceptionRestController exceptionRestController;
@@ -43,5 +43,18 @@ public class RegistrationRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonAccount))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    @WithMockUser
+    public void givenMockUser_whenLogin_thenReturnStatusOk() throws Exception {
+        mvc.perform(post("/login"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenNoUser_whenLogin_thenReturnStatusUnauthorized() throws Exception {
+        mvc.perform(post("/login"))
+                .andExpect(status().isUnauthorized());
     }
 }
