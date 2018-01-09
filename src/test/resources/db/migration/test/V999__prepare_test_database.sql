@@ -67,6 +67,12 @@ CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `pal` (
+  `name` VARCHAR(50) NOT NULL,
+  `value` FLOAT NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `privilege` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -128,10 +134,13 @@ CREATE TABLE `user` (
   `role_id` bigint(20) NOT NULL,
   `password` varchar(255) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
+  `daily_energy` INT(11) NULL,
+  `pal` VARCHAR(50) NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
   KEY `fk_user_role` (`role_id`),
-  CONSTRAINT `fk_user_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+  CONSTRAINT `fk_user_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `fk_user_pal` FOREIGN KEY (`pal`) REFERENCES `pal` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_day` (
@@ -198,9 +207,13 @@ INSERT INTO `role_privilege` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(2
 (1,9),(1,10),(1,11),(1,12),(1,13),(2,13);
 
 INSERT INTO `user` VALUES (1,'admin@foodfinder.com','','',0,0,0,'',1,
-'$2a$10$6RgTDLtXfDgst20Mxt89/Oviq6vuO0QDXLKV.CbqYuapQ7vF6bbOq',1),(2,'user@foodfinder.com','','',0,0,0,'',2,
-'$2a$10$uhBXm6h8VpX0hq.VEdtqle7xLKo2pksdBcaUxgh0Rau2XGQHsO2sm',1),(3,'janusz@foodfinder.com','Janusz','Testowy',
-NULL,NULL,0,NULL,2,'$2a$10$syZyKe95sbglXa4cHmyNBeI0vhEWFahkjqpCb6fnr1ZlJ1WucHTTm',1);
+'$2a$10$6RgTDLtXfDgst20Mxt89/Oviq6vuO0QDXLKV.CbqYuapQ7vF6bbOq',1,null,null),(2,'user@foodfinder.com','','',0,0,0,'',2,
+'$2a$10$uhBXm6h8VpX0hq.VEdtqle7xLKo2pksdBcaUxgh0Rau2XGQHsO2sm',1,null,null),(3,'janusz@foodfinder.com','Janusz','Testowy',
+NULL,NULL,0,NULL,2,'$2a$10$syZyKe95sbglXa4cHmyNBeI0vhEWFahkjqpCb6fnr1ZlJ1WucHTTm',1,null,null);
+
+INSERT INTO `pal` VALUES ('LOW', 1.4);
+INSERT INTO `pal` VALUES ('MEDIUM', 1.7);
+INSERT INTO `pal` VALUES ('HIGH', 2.0);
 
 INSERT INTO `composition` VALUES (1,66.2,'Carbohydrate, by difference','g',4.9,'Węglowodany'),(2,353,'Energy','kcal',26,
 'Energia'),(3,1.4,'Total lipid (fat)','g',0.1,'Tłuszcz'),(4,19.9,'Protein','g',1.47,'Białko'),(5,41,
@@ -293,5 +306,5 @@ NULL,21,1,0,
 'Cheese, american cheddar, imitation',NULL,21,1,0,'Ser, amerykański cheddar, imitacja',84,81,83,82),(22,NULL,
 '1.0 serving','Cheese, American, nonfat or fat free',NULL,19,1,0,'Ser, amerykański, beztłuszczowy lub beztłuszczowy',88,
 85,87,86),(23,NULL,'1.0 oz','Cheese, blue',NULL,28.35,1,0,'Ser, niebieski',92,89,91,90),(24,NULL,'1.0 cup, diced',
-'Cheese, brick',NULL,132,1,0,'Ser, cegła',96,93,95,94),(25,NULL,'1.0 oz','Cheese, brie',NULL,28.35,1,0,'Ser, brie',100,
-97,99,98);
+'Cheese, brick',NULL,132,1,0,'Ser, cegła',96,93,95,94),(25,NULL,'1.0 cup, mashed','Bananas, raw',NULL,225,9,4,
+'Banany, surowe',100,97,99,98);

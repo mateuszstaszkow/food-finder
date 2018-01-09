@@ -69,7 +69,6 @@ public class AccountServiceTest {
                 .height(200f)
                 .age(20)
                 .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
                 .build();
 
         given(loggedUserGetter.getLoggedUser()).willReturn(account);

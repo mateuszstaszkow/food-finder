@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = DayMapper.class)
+@Mapper(componentModel = "spring", uses = {DayMapper.class, PalMapper.class})
 public interface UserMapper {
 
     @Mapping(target = "password", ignore = true)
@@ -22,6 +22,7 @@ public interface UserMapper {
             @Mapping(target = "role", ignore = true),
             @Mapping(target = "password", ignore = true),
             @Mapping(target = "enabled", ignore = true),
+            @Mapping(target = "days", ignore = true),
             @Mapping(target = "id", ignore = true)
     })
     User toEntity(BasicUserDTO userDTO);
@@ -43,12 +44,4 @@ public interface UserMapper {
     List<RoleDTO> roleListToDto(Page<Role> rolePage);
 
     List<PrivilegeDTO> privilegeListToDto(Page<Privilege> privilegePage);
-
-    @Mappings({
-            @Mapping(target = "role", ignore = true),
-            @Mapping(target = "days", ignore = true),
-            @Mapping(target = "enabled", ignore = true),
-            @Mapping(target = "id", ignore = true)
-    })
-    User toEntity(RegistrationDTO userDTO);
 }

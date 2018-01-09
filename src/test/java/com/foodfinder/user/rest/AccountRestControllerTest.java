@@ -54,7 +54,6 @@ public class AccountRestControllerTest {
                 .height(200f)
                 .age(20)
                 .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
                 .build();
 
         given(accountService.getAccount()).willReturn(account);
@@ -77,7 +76,6 @@ public class AccountRestControllerTest {
                 .height(200f)
                 .age(20)
                 .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
                 .build();
         String jsonAccount = new ObjectMapper().writeValueAsString(account);
 

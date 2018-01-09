@@ -16,16 +16,7 @@ public class RegistrationIntegrationTest extends IntegrationTestSetup {
 
     @Test
     public void givenRegistrationDTOWithoutAuthentication_whenRegister_thenReturnStatusCreated() throws Exception {
-        RegistrationDTO account = RegistrationDTO.builder()
-                .name("New User")
-                .surname("Accountski")
-                .email("account@account.com")
-                .password("encryptedpassword")
-                .weight(100f)
-                .height(200f)
-                .age(20)
-                .gender("male")
-                .build();
+        RegistrationDTO account = new RegistrationDTO("user@user.com", "password");
         String jsonAccount = new ObjectMapper().writeValueAsString(account);
 
         mockMvc.perform(post("/register")

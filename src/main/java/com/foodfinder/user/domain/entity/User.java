@@ -49,10 +49,17 @@ public class User implements Serializable {
     private Float height;
 
     @Column(name = "age")
-    private int age;
+    private Integer age;
 
     @Column(name = "gender", length = 50)
     private String gender;
+
+    @Column(name = "daily_energy")
+    private Integer dailyEnergy;
+
+    @JoinColumn(name = "pal", referencedColumnName = "name")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Pal pal;
 
     @JoinTable(name = "user_day",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

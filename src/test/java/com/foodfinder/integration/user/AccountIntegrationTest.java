@@ -38,8 +38,7 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
                 .weight(100f)
                 .height(200f)
                 .age(20)
-                .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
+                .gender("man")
                 .build();
         String jsonAccount = new ObjectMapper().writeValueAsString(account);
 
@@ -59,8 +58,7 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
                 .weight(100f)
                 .height(200f)
                 .age(20)
-                .gender("male")
-                .days(Collections.singletonList(new DayDTO()))
+                .gender("man")
                 .build();
         String jsonAccount = new ObjectMapper().writeValueAsString(account);
 

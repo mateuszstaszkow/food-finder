@@ -1,12 +1,9 @@
 package com.foodfinder.user.domain.dto;
 
-import com.foodfinder.day.domain.dto.DayDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +18,6 @@ public class BasicUserDTO {
     private Float height;
     private int age;
     private String gender;
-    //private List<DietDTO> diets;
-    private List<DayDTO> days;
+    private Integer dailyEnergy;
+    private String pal;
 }

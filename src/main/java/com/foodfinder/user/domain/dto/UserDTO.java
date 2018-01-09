@@ -21,8 +21,10 @@ public class UserDTO {
     private Boolean enabled;
     private Float weight;
     private Float height;
-    private int age;
+    private Integer age;
     private String gender;
+    private Integer dailyEnergy;
+    private String pal;
     //private List<DietDTO> diets;
     private RoleDTO role;
     private List<DayDTO> days;

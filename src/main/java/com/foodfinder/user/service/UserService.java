@@ -3,11 +3,11 @@ package com.foodfinder.user.service;
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.domain.dto.TimedDishDTO;
 import com.foodfinder.day.domain.entity.Day;
-import com.foodfinder.day.domain.entity.TimedDish;
 import com.foodfinder.day.domain.mapper.DayMapper;
 import com.foodfinder.day.service.DayService;
 import com.foodfinder.user.domain.dto.BasicUserDTO;
 import com.foodfinder.user.domain.dto.UserDTO;
+import com.foodfinder.user.domain.entity.Pal;
 import com.foodfinder.user.domain.entity.User;
 import com.foodfinder.user.domain.mapper.UserMapper;
 import com.foodfinder.user.repository.UserRepository;
@@ -34,6 +34,9 @@ public class UserService {
     private final UserMapper userMapper;
     private final DayMapper dayMapper;
     private final DayService dayService;
+
+    private static final String GENDER_MAN = "man";
+    private static final String GENDER_WOMAN = "woman";
 
     public List<UserDTO> getUserList(Pageable pageable) {
         return Optional.ofNullable(userRepository.findAll(pageable))
@@ -77,6 +80,10 @@ public class UserService {
         userEntity.setEnabled(dbUser.getEnabled());
         userEntity.setRole(dbUser.getRole());
 
+        if(isEnergyUpdated(userEntity, dbUser)) {
+            userEntity.setDailyEnergy(calculateEnergy(userEntity).intValue());
+        }
+
         userRepository.save(userEntity);
     }
 
@@ -97,7 +104,7 @@ public class UserService {
         List<DayDTO> days = getDayList(id, from, to);
 
         if(days.isEmpty()) {
-            return null;
+            throw new NotFoundException();
         }
 
         return days.get(0);
@@ -118,6 +125,33 @@ public class UserService {
         dayService.updateDay(userDay.get(0).getId(), dayDTO);
         addDayToUser(id, dayDTO);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private Float calculateEnergy(User user) {
+        Float pal = Optional.ofNullable(user.getPal())
+                .map(Pal::getValue)
+                .orElse(1f);
+
+        if(user.getGender().equals(GENDER_WOMAN)) {
+            return pal * harrisBenedictEquation(user, 655.1f, 9.567f, 1.85f, 4.68f);
+        } else if(user.getGender().equals(GENDER_MAN)) {
+            return pal * harrisBenedictEquation(user, 66.47f, 13.7f, 5f, 6.76f);
+        }
+
+        throw new BadRequestException("Invalid gender");
+    }
+
+    private Float harrisBenedictEquation(User user, Float a, Float b, Float c, Float d) {
+        return a + b * user.getWeight() + c * user.getHeight() - d * user.getAge();
+    }
+
+    private Boolean isEnergyUpdated(User userEntity, User dbUser) {
+        Boolean weightChanged = !userEntity.getWeight().equals(dbUser.getWeight());
+        Boolean heightChanged = !userEntity.getHeight().equals(dbUser.getHeight());
+        Boolean ageChanged = !userEntity.getAge().equals(dbUser.getAge());
+        Boolean genderChanged = !userEntity.getGender().equals(dbUser.getGender());
+
+        return weightChanged || heightChanged || ageChanged || genderChanged;
     }
 
     private void addDayToUser(Long id, DayDTO dayDTO) {

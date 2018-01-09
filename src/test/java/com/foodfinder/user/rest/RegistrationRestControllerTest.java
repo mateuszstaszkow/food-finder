@@ -36,16 +36,7 @@ public class RegistrationRestControllerTest {
     @WithMockUser
     public void givenRegistrationDTO_whenRegister_thenReturnStatusCreated() throws Exception {
 
-        RegistrationDTO account = RegistrationDTO.builder()
-                .name("User")
-                .surname("Userski")
-                .email("user@user.com")
-                .password("encryptedpassword")
-                .weight(100f)
-                .height(200f)
-                .age(20)
-                .gender("male")
-                .build();
+        RegistrationDTO account = new RegistrationDTO("new@user.com", "password");
         String jsonAccount = new ObjectMapper().writeValueAsString(account);
 
         mvc.perform(post("/register")
