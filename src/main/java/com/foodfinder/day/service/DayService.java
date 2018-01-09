@@ -1,6 +1,7 @@
 package com.foodfinder.day.service;
 
 import com.foodfinder.day.domain.dto.DayDTO;
+import com.foodfinder.day.domain.dto.TimedDishDTO;
 import com.foodfinder.day.domain.entity.Day;
 import com.foodfinder.day.domain.entity.TimedDish;
 import com.foodfinder.day.domain.mapper.DayMapper;
@@ -43,6 +44,7 @@ public class DayService {
     public DayDTO getDay(Long id) {
         return Optional.ofNullable(dayRepository.findOne(id))
                 .map(dayMapper::toDto)
+                .map(this::sortTimedDishesByOrder)
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -70,12 +72,14 @@ public class DayService {
 
         return Optional.ofNullable(dayRepository.findByDateString(formattedDate))
                 .map(dayMapper::dayListToDto)
+                .map(this::sortTimedDishesByOrder)
                 .orElseThrow(NotFoundException::new);
     }
 
     private List<DayDTO> getDayList(Pageable pageable) {
         return Optional.ofNullable(dayRepository.findAll(pageable))
                 .map(dayMapper::dayListToDto)
+                .map(this::sortTimedDishesByOrder)
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -85,6 +89,7 @@ public class DayService {
 
         return Optional.ofNullable(dayRepository.findByDateBetween(from, to))
                 .map(dayMapper::dayListToDto)
+                .map(this::sortTimedDishesByOrder)
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -100,6 +105,22 @@ public class DayService {
                 .filter(timedDish -> timedDishes.get(timedDish.getDishOrder()) != null)
                 .forEach(timedDish -> timedDish.setId(timedDishes.get(timedDish.getDishOrder()).getId()));
         day.setId(id);
+
+        return day;
+    }
+
+    private List<DayDTO> sortTimedDishesByOrder(List<DayDTO> days) {
+        return days.stream()
+                .map(this::sortTimedDishesByOrder)
+                .collect(Collectors.toList());
+    }
+
+    private DayDTO sortTimedDishesByOrder(DayDTO day) {
+        List<TimedDishDTO> timedDishes = day.getTimedDishes()
+                .stream()
+                .sorted(Comparator.comparingInt(TimedDishDTO::getDishOrder))
+                .collect(Collectors.toList());
+        day.setTimedDishes(timedDishes);
 
         return day;
     }
