@@ -79,6 +79,7 @@ public class UserService {
         userEntity.setPassword(dbUser.getPassword());
         userEntity.setEnabled(dbUser.getEnabled());
         userEntity.setRole(dbUser.getRole());
+        userEntity.setDays(dbUser.getDays());
 
         if(isEnergyUpdated(userEntity, dbUser)) {
             userEntity.setDailyEnergy(calculateEnergy(userEntity).intValue());
