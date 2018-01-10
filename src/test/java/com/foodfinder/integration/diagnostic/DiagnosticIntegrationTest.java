@@ -21,14 +21,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DiagnosticIntegrationTest extends IntegrationTestSetup {
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz")
     public void whenGetDiagnostics_thenReturnsStatusOk() throws Exception {
         mockMvc.perform(get("/api/diagnostics"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz")
     public void givenDiagnostic_whenPostDiagnostic_thenReturnsStatusCreated() throws Exception {
         DiagnosticDTO diagnostic = DiagnosticDTO.builder()
                 .id(1L)
@@ -46,7 +46,7 @@ public class DiagnosticIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz")
     public void givenDiagnosticWithNullId_whenPostDiagnostic_thenReturnsStatusCreated() throws Exception {
         DiagnosticDTO diagnostic = DiagnosticDTO.builder()
                 .id(1L)
@@ -64,7 +64,7 @@ public class DiagnosticIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz")
     public void givenDiagnostic_whenGetDiagnostic_thenReturnsDiagnostic() throws Exception {
         DiagnosticDTO diagnostic = DiagnosticDTO.builder()
                 .id(1L)

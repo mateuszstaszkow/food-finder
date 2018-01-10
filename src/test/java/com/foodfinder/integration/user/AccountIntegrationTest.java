@@ -89,10 +89,9 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @Ignore
     @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
     public void givenProductsAndDay_whenUpdateDay_thenNotAddANewOne() throws Exception {
-        addDayToDatabase(null, null);
+        addDayToDatabase();
 
         long before = dayRepository.count();
 
@@ -103,7 +102,6 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
                 .getContentAsString();
         DayDTO day = (DayDTO) ((ArrayList)(mapper.readValue(result, new TypeReference<List<DayDTO>>(){}))).get(0);
         String jsonDay = new ObjectMapper().writeValueAsString(day);
-        //String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(day.getDate());
 
         mockMvc.perform(post("/api/users/me/days")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -114,10 +112,9 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @Ignore
     @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
-    public void givenProductsAndDay_whenUpdateDay_thenUpdateNameField() throws Exception {
-        addDayToDatabase(null, null);
+    public void givenProductsAndDay_whenUpdateDay_thenUpdateDishOrderField() throws Exception {
+        addDayToDatabase();
 
         String result = mockMvc.perform(get("/api/users/me/days")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -127,26 +124,27 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
         DayDTO day = (DayDTO) ((ArrayList)(mapper.readValue(result, new TypeReference<List<DayDTO>>(){}))).get(0);
         day.getTimedDishes().get(0).setDishOrder(999);
         String jsonDay = new ObjectMapper().writeValueAsString(day);
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(day.getDate());
 
-        mockMvc.perform(post("/api/users/me/days/" + day.getId())
+        mockMvc.perform(post("/api/users/me/days")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDay))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/api/users/me/days/" + day.getId())
+        mockMvc.perform(get("/api/users/me/days/" + formattedDate)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.timedDishes[0].dishOrder", Is.is(999)));
     }
 
-    private DayDTO addDayToDatabase(Long dayId, Long dishId) throws Exception {
+    private void addDayToDatabase() throws Exception {
         String result = mockMvc.perform(get("/api/products?page=0&size=10")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
         List<ProductDTO> products = mapper.readValue(result, new TypeReference<List<ProductDTO>>(){});
-        DayDTO day = DayBuilder.getDayDTO(products, dayId, dishId);
+        DayDTO day = DayBuilder.getDayDTO(products, null, null);
         day.setDate(new Date(10000));
         String jsonDay = new ObjectMapper().writeValueAsString(day);
 
@@ -154,7 +152,5 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDay))
                 .andExpect(status().isCreated());
-
-        return day;
     }
 }

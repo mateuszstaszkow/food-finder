@@ -189,11 +189,13 @@ public class UserService {
     }
 
     private Date getDateFrom(Date date) {
-        return getDateByHms(date, 0, 0, 0);
+        Date dayFirstDate = getDateByHms(date, 0, 0, 0);
+        return new Date(dayFirstDate.getTime() - 1000);
     }
 
     private Date getDateTo(Date date) {
-        return getDateByHms(date, 23, 59, 59);
+        Date dayLastDate = getDateByHms(date, 23, 59, 59);
+        return new Date(dayLastDate.getTime() + 1000);
     }
 
     private Date getDateByHms(Date date, int hours, int minutes, int seconds) {
