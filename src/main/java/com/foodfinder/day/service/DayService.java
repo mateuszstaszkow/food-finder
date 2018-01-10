@@ -1,5 +1,6 @@
 package com.foodfinder.day.service;
 
+import com.foodfinder.container.exceptions.service.ExceptionStasher;
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.domain.dto.TimedDishDTO;
 import com.foodfinder.day.domain.entity.Day;
@@ -27,6 +28,7 @@ public class DayService {
     private final DayRepository dayRepository;
     private final DayMapper dayMapper;
     private final HitsService hitsService;
+    private final ExceptionStasher exceptionStasher;
 
     @Value("${spring.jackson.date-format}")
     private String dateFormat;
@@ -55,7 +57,12 @@ public class DayService {
 
         dayEntity = hitsService.incrementHitsForANewDay(dayEntity);
 
-        dayRepository.save(dayEntity);
+        try {
+            dayRepository.save(dayEntity);
+        } catch (Exception exception) {
+            exceptionStasher.stash(exception, "Error during day save");
+            throw new BadRequestException(exception);
+        }
     }
 
     public void updateDay(Long id, DayDTO day) {
@@ -64,7 +71,13 @@ public class DayService {
                 .map(d -> verifyTimedDishes(d, id))
                 .orElseThrow(BadRequestException::new);
         dayEntity = hitsService.incrementHitsForAnUpdatedDay(dayEntity);
-        dayRepository.save(dayEntity);
+
+        try {
+            dayRepository.save(dayEntity);
+        } catch (Exception exception) {
+            exceptionStasher.stash(exception, "Error during day update");
+            throw new BadRequestException(exception);
+        }
     }
 
     private List<DayDTO> getDayList(Date date) {

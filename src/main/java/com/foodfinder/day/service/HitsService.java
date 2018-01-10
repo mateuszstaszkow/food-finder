@@ -27,6 +27,10 @@ public class HitsService {
     private final FoodMapper foodMapper;
 
     public Day incrementHitsForANewDay(Day day) {
+        if(day == null) {
+            return null;
+        }
+
         Set<TimedDish> timedDishes = day.getTimedDishes()
                 .stream()
                 .map(this::incrementHits)
@@ -38,6 +42,10 @@ public class HitsService {
     }
 
     public Day incrementHitsForAnUpdatedDay(Day day) {
+        if(day == null) {
+            return null;
+        }
+
         Set<TimedDish> timedDishes = day.getTimedDishes();
         List<Dish> dbDishes = getDatabaseDishes(timedDishes);
 

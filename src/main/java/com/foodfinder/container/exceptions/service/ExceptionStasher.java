@@ -41,7 +41,6 @@ public class ExceptionStasher {
         if(documentedException == null) {
             return;
         }
-
         diagnosticRepository.save(documentedException);
     }
 
@@ -49,7 +48,6 @@ public class ExceptionStasher {
         if(exception == null) {
             return;
         }
-
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writeValue(new File(EXCEPTION_FILEPATH), exception);

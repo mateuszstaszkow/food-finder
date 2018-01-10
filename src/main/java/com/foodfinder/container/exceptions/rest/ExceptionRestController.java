@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.NotFoundException;
 
 @ControllerAdvice
@@ -40,6 +41,12 @@ public class ExceptionRestController {
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     @ExceptionHandler(StashingException.class)
     public void handleStashingException(StashingException exception) {
+        exceptionStasher.stash(exception, "");
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(NotAuthorizedException.class)
+    public void handleNotAuthorizedException(NotAuthorizedException exception) {
         exceptionStasher.stash(exception, "");
     }
 }
