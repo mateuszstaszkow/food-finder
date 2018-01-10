@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/food-finder.iml" filepath="$PROJECT_DIR$/.idea/modules/food-finder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/food-finder_gatling.iml" filepath="$PROJECT_DIR$/.idea/modules/food-finder_gatling.iml" group="food-finder" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/food-finder_main.iml" filepath="$PROJECT_DIR$/.idea/modules/food-finder_main.iml" group="food-finder" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/food-finder_test.iml" filepath="$PROJECT_DIR$/.idea/modules/food-finder_test.iml" group="food-finder" />
     </modules>
