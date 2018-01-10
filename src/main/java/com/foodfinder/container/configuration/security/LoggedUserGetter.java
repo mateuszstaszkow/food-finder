@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("loggedUserGetter")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class LoggedUserGetter {
 

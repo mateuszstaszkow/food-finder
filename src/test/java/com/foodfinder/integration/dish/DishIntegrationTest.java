@@ -37,7 +37,7 @@ public class DishIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenDish_whenPostDish_thenReturnsStatusCreated() throws Exception {
         DishDTO dish = getDishWithProductsFromDb(1L);
         String jsonDish = new ObjectMapper().writeValueAsString(dish);
@@ -49,7 +49,7 @@ public class DishIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenDishWithNullId_whenPostDish_thenReturnsStatusCreated() throws Exception {
         DishDTO dish = getDishWithProductsFromDb(null);
         String jsonDish = new ObjectMapper().writeValueAsString(dish);
@@ -61,7 +61,7 @@ public class DishIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenDish_whenGetDish_thenReturnsDish() throws Exception {
         DishDTO dish = getDishWithProductsFromDb(1L);
         String jsonDish = new ObjectMapper().writeValueAsString(dish);
@@ -77,7 +77,7 @@ public class DishIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenDish_whenGetDishByName_thenReturnsDishArray() throws Exception {
         DishDTO dish = getDishWithProductsFromDb(null);
         String jsonDish = new ObjectMapper().writeValueAsString(dish);
@@ -93,7 +93,7 @@ public class DishIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndDish_whenUpdateDish_thenNotAddANewOne() throws Exception {
         addDishToDatabase();
 
@@ -116,7 +116,7 @@ public class DishIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndDish_whenUpdateDish_thenUpdateNameField() throws Exception {
         addDishToDatabase();
 

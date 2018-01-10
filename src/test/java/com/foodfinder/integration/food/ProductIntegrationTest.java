@@ -38,7 +38,7 @@ public class ProductIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProduct_whenPostProduct_thenReturnsStatusCreated() throws Exception {
         ProductDTO product = getProduct(1L);
         String jsonProduct = new ObjectMapper().writeValueAsString(product);
@@ -50,7 +50,7 @@ public class ProductIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductWithNullId_whenPostProduct_thenReturnsStatusCreated() throws Exception {
         ProductDTO product = getProduct(null);
         String jsonProduct = new ObjectMapper().writeValueAsString(product);
@@ -62,7 +62,7 @@ public class ProductIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProduct_whenGetProduct_thenReturnsProduct() throws Exception {
         ProductDTO product = getProduct(1L);
         String jsonProduct = new ObjectMapper().writeValueAsString(product);
@@ -78,7 +78,7 @@ public class ProductIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProduct_whenGetProductByName_thenReturnsProductArray() throws Exception {
         ProductDTO product = getProduct(null);
         String jsonProduct = new ObjectMapper().writeValueAsString(product);
@@ -94,7 +94,7 @@ public class ProductIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndProduct_whenUpdateProduct_thenNotAddANewOne() throws Exception {
         addProductToDatabase();
 
@@ -117,7 +117,7 @@ public class ProductIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndProduct_whenUpdateProduct_thenUpdateNameField() throws Exception {
         addProductToDatabase();
 

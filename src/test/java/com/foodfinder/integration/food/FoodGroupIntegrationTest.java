@@ -36,7 +36,7 @@ public class FoodGroupIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenFoodGroup_whenPostFoodGroup_thenReturnsStatusCreated() throws Exception {
         FoodGroupDTO foodGroup = new FoodGroupDTO(1L, "Test foodGroups 1");
         String jsonFoodGroup = new ObjectMapper().writeValueAsString(foodGroup);
@@ -48,7 +48,7 @@ public class FoodGroupIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenFoodGroupWithNullId_whenPostFoodGroup_thenReturnsStatusCreated() throws Exception {
         FoodGroupDTO foodGroup = new FoodGroupDTO(null, "Test foodGroups 2");
         String jsonFoodGroup = new ObjectMapper().writeValueAsString(foodGroup);
@@ -60,7 +60,7 @@ public class FoodGroupIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenFoodGroup_whenGetFoodGroup_thenReturnsFoodGroup() throws Exception {
         FoodGroupDTO foodGroup = new FoodGroupDTO(1L, "Test foodGroups 3");
         String jsonFoodGroup = new ObjectMapper().writeValueAsString(foodGroup);
@@ -76,7 +76,7 @@ public class FoodGroupIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenFoodGroup_whenGetFoodGroupByName_thenReturnsFoodGroupArray() throws Exception {
         FoodGroupDTO foodGroup = new FoodGroupDTO(null, "Test foodGroups 4");
         String jsonFoodGroup = new ObjectMapper().writeValueAsString(foodGroup);
@@ -92,7 +92,7 @@ public class FoodGroupIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenFoodGroupsAndFoodGroup_whenUpdateFoodGroup_thenNotAddANewOne() throws Exception {
         addFoodGroupToDatabase("Test foodGroups 5");
 
@@ -115,7 +115,7 @@ public class FoodGroupIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenFoodGroupsAndFoodGroup_whenUpdateFoodGroup_thenUpdateNameField() throws Exception {
         addFoodGroupToDatabase("Test foodGroups 6");
 
