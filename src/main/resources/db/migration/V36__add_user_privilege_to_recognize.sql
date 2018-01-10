@@ -1,0 +1,1 @@
+INSERT INTO `role_privilege` VALUES (2,8);

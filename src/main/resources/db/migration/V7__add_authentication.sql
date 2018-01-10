@@ -1,0 +1,4 @@
+ALTER TABLE `user`
+    MODIFY email VARCHAR(50) NOT NULL,
+    ADD password VARCHAR(50) NOT NULL,
+    ADD enabled TINYINT(1) NOT NULL;

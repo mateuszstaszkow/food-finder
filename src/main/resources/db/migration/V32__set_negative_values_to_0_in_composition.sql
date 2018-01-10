@@ -1,0 +1,1 @@
+UPDATE composition SET value = 0 WHERE value < 0;

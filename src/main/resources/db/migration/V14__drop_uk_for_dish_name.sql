@@ -1,0 +1,1 @@
+ALTER TABLE `dish` DROP INDEX `UK_r7g2l08wdh3uv3gvurli4s1bx`;
