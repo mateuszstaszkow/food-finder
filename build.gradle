@@ -1,3 +1,5 @@
+import io.franzbecker.gradle.lombok.task.DelombokTask
+
 buildscript {
     repositories {
         mavenCentral()
@@ -11,9 +13,10 @@ plugins {
     id 'net.ltgt.apt' version '0.8'
     id "org.flywaydb.flyway" version "5.0.3"
     id "com.github.lkishalmi.gatling" version "0.4.1"
+    id 'io.franzbecker.gradle-lombok' version '1.11'
+    id 'java'
 }
 
-apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
@@ -61,6 +64,7 @@ dependencies {
     //Documentation
     compile("io.springfox:springfox-swagger2:${swaggerVersion}")
     compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+    compile("javax.interceptor:javax.interceptor-api:${javaxInterceptorVersion}")
 
     //Tests
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
@@ -73,8 +77,9 @@ dependencies {
 compileJava {
     options.compilerArgs = [
             '-Amapstruct.suppressGeneratorTimestamp=true',
-            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+            '-Amapstruct.suppressGeneratorVersionInfoComment=true'
     ]
+    options.encoding = "UTF-8"
 }
 
 flyway {
@@ -88,3 +93,22 @@ ScalaCompileOptions.metaClass.daemonServer = true
 ScalaCompileOptions.metaClass.fork = true
 ScalaCompileOptions.metaClass.useAnt = false
 ScalaCompileOptions.metaClass.useCompileDaemon = false
+
+task delombok(type: DelombokTask, dependsOn: compileJava) {
+    ext.outputDir = file("$buildDir/delombok")
+    outputs.dir(outputDir)
+    sourceSets.main.java.srcDirs.each {
+        inputs.dir(it)
+        args(it, "-d", outputDir)
+    }
+}
+
+task delombokHelp(type: DelombokTask) {
+    args "--help"
+}
+
+javadoc {
+    dependsOn delombok
+    source = delombok.outputDir
+    failOnError = false
+}

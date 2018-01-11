@@ -6,6 +6,8 @@
       <excludeFolder url="file://$MODULE_DIR$/../../.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../build" />
       <excludeFolder url="file://$MODULE_DIR$/../../build/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/delombok" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/docs" />
       <excludeFolder url="file://$MODULE_DIR$/../../build/libs" />
       <excludeFolder url="file://$MODULE_DIR$/../../build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/../../build/resources" />
