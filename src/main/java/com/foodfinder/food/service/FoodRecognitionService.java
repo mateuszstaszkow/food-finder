@@ -49,7 +49,7 @@ public class FoodRecognitionService {
         GoogleVisionMainRequestDTO request = buildRequest(base64EncodedGraphic);
         List<GoogleVisionLabelAnnotationDTO> recognitionData = getRecognitionData(buildUri(), request);
         ProductDTO recognizedProduct = findBestMatchingProduct(recognitionData);
-        hitsService.incrementHitsAndSave(recognizedProduct);
+        //hitsService.incrementHitsAndSave(recognizedProduct);
         return recognizedProduct;
     }
 

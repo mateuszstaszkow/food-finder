@@ -38,7 +38,6 @@ public class ExceptionRestController {
         exceptionStasher.stash(exception, "");
     }
 
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     @ExceptionHandler(StashingException.class)
     public void handleStashingException(StashingException exception) {
         exceptionStasher.stash(exception, "");

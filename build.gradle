@@ -24,7 +24,7 @@ apply plugin: 'scala'
 
 war {
     baseName = 'food-finder'
-    version = '0.14.0'
+    version = '1.0.0'
 }
 
 repositories {
@@ -53,7 +53,6 @@ dependencies {
     apt("org.mapstruct:mapstruct-processor:${mapstructVersion}")
 
     //RESTful
-    compile("javax.ws.rs:javax.ws.rs-api:${rsApiVersion}")
     compile("org.glassfish.jersey.core:jersey-common:${jerseyCommonVersion}")
     compile("org.springframework.hateoas:spring-hateoas:${springHateoasVersion}")
 
