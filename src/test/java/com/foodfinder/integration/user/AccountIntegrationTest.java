@@ -53,7 +53,7 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
                 .weight(100f)
                 .height(200f)
                 .age(20)
-                .gender("man")
+                .gender("male")
                 .build();
         String jsonAccount = new ObjectMapper().writeValueAsString(account);
 
@@ -73,7 +73,7 @@ public class AccountIntegrationTest extends IntegrationTestSetup {
                 .weight(100f)
                 .height(200f)
                 .age(20)
-                .gender("man")
+                .gender("male")
                 .build();
         String jsonAccount = new ObjectMapper().writeValueAsString(account);
 

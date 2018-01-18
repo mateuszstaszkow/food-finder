@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -35,8 +34,9 @@ public class FoodRecognitionService {
     private static final int FEATURE_MAX_RESULTS = 5;
     private static final int MAX_FILE_SIZE = 128000;
     private static final int LIVE_SEARCH_PAGE_SIZE = 10;
-    private static final String FEATURE_TYPE = "LABEL_DETECTION"; //TODO
-    private static final String[] FEATURE_BANNED_TYPES = {"food", "vegetable", "produce", "fruit", "product", "dish"}; //TODO
+    private static final String FEATURE_TYPE = "LABEL_DETECTION";
+    private static final String[] FEATURE_BANNED_TYPES = {"food", "vegetable", "produce", "fruit", "product", "dish"};
+    private static final String NOT_FOUND_PRODUCT = "Spaghetti, with meat";
 
     @Value("${google.vision.url}")
     private String GOOGLE_VISION_URL;
@@ -49,7 +49,7 @@ public class FoodRecognitionService {
         GoogleVisionMainRequestDTO request = buildRequest(base64EncodedGraphic);
         List<GoogleVisionLabelAnnotationDTO> recognitionData = getRecognitionData(buildUri(), request);
         ProductDTO recognizedProduct = findBestMatchingProduct(recognitionData);
-        hitsService.incrementHitsAndSave(recognizedProduct);
+        //hitsService.incrementHitsAndSave(recognizedProduct);
         return recognizedProduct;
     }
 
@@ -130,7 +130,7 @@ public class FoodRecognitionService {
         if(filteredProducts.isEmpty() && !products.isEmpty()) {
             return products.get(0);
         } else if(filteredProducts.isEmpty() && products.isEmpty()) {
-            throw new NotFoundException();
+            return liveSearchService.getOriginalProducts(NOT_FOUND_PRODUCT, 1).get(0);
         }
 
         return filteredProducts.get(0);

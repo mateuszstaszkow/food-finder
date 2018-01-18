@@ -1,5 +1,6 @@
 package com.foodfinder.user;
 
+import com.foodfinder.container.exceptions.service.ExceptionStasher;
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.domain.dto.TimedDishDTO;
 import com.foodfinder.day.domain.entity.Day;
@@ -43,6 +44,9 @@ public class UserServiceTest {
     @MockBean
     private DayService dayService;
 
+    @MockBean
+    private ExceptionStasher exceptionStasher;
+
     private UserService userService;
     private PageRequest defaultPageRequest;
     private User user;
@@ -54,7 +58,7 @@ public class UserServiceTest {
 
     @Before
     public void setup() {
-        userService = new UserService(userRepository, userMapper, dayMapper, dayService);
+        userService = new UserService(userRepository, userMapper, dayMapper, dayService, exceptionStasher);
         defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
 
         user = User.builder()

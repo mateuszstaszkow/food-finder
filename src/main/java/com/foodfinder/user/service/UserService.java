@@ -1,5 +1,6 @@
 package com.foodfinder.user.service;
 
+import com.foodfinder.container.exceptions.service.ExceptionStasher;
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.domain.dto.TimedDishDTO;
 import com.foodfinder.day.domain.entity.Day;
@@ -34,9 +35,10 @@ public class UserService {
     private final UserMapper userMapper;
     private final DayMapper dayMapper;
     private final DayService dayService;
+    private final ExceptionStasher exceptionStasher;
 
-    private static final String GENDER_MAN = "man";
-    private static final String GENDER_WOMAN = "woman";
+    private static final String GENDER_MAN = "male";
+    private static final String GENDER_WOMAN = "female";
 
     public List<UserDTO> getUserList(Pageable pageable) {
         return Optional.ofNullable(userRepository.findAll(pageable))
@@ -54,7 +56,13 @@ public class UserService {
         User userEntity = Optional.ofNullable(user)
                 .map(userMapper::toEntity)
                 .orElseThrow(BadRequestException::new);
-        userRepository.save(userEntity);
+
+        try {
+            userRepository.save(userEntity);
+        } catch (Exception exception) {
+            exceptionStasher.stash(exception, "Error during user save");
+            throw new BadRequestException(exception);
+        }
     }
 
     public void updateUser(Long id, UserDTO user) {
@@ -66,7 +74,12 @@ public class UserService {
         userEntity.setId(id);
         userEntity.setPassword(dbUser.getPassword());
 
-        userRepository.save(userEntity);
+        try {
+            userRepository.save(userEntity);
+        } catch (Exception exception) {
+            exceptionStasher.stash(exception, "Error during user save");
+            throw new BadRequestException(exception);
+        }
     }
 
     public void updateBasicUser(Long id, BasicUserDTO user) {
@@ -85,7 +98,12 @@ public class UserService {
             userEntity.setDailyEnergy(calculateEnergy(userEntity).intValue());
         }
 
-        userRepository.save(userEntity);
+        try {
+            userRepository.save(userEntity);
+        } catch (Exception exception) {
+            exceptionStasher.stash(exception, "Error during basic user update");
+            throw new BadRequestException(exception);
+        }
     }
 
     public List<DayDTO> getUserDays(Long id, Date from, Date to) {

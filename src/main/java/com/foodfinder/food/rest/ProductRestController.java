@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ class ProductRestController {
         return productService.getProductList(pageable, name);
     }
 
+    @PreAuthorize("hasRole('VIEW_ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void addProduct(@RequestBody ProductDTO productDTO) {
@@ -35,6 +37,7 @@ class ProductRestController {
         return productService.getProduct(id);
     }
 
+    @PreAuthorize("hasRole('VIEW_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {

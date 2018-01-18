@@ -24,8 +24,8 @@ public class LoginService {
         userEntity.setPassword(user.getPassword());
         String encryptedPassword = passwordEncoder.encode(userEntity.getPassword());
         userEntity.setPassword(encryptedPassword);
-        userEntity.setEnabled(true); //TODO
-        userEntity.setRole(new Role(2L)); //TODO
+        userEntity.setEnabled(true);
+        userEntity.setRole(new Role(2L));
 
         try {
             userRepository.save(userEntity);

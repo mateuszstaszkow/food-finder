@@ -38,7 +38,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndDay_whenPostDay_thenReturnsStatusCreated() throws Exception {
         addDayToDatabase(1L, 1L);
         addDayToDatabase(null, null);
@@ -47,7 +47,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndDay_whenGetDay_thenReturnsDay() throws Exception {
         DayDTO day = addDayToDatabase(5L, 1L);
         String fatName = day.getTimedDishes()
@@ -68,7 +68,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndDay_whenUpdateDay_thenNotAddANewOne() throws Exception {
         addDayToDatabase(10L, 1L);
 
@@ -91,7 +91,7 @@ public class DayIntegrationTest extends IntegrationTestSetup {
     }
 
     @Test
-    @WithMockUser(username = "user@foodfinder.com", password = "mokotow")
+    @WithMockUser(username = "admin@foodfinder.com", password = "zoliborz", roles = "VIEW_ADMIN")
     public void givenProductsAndDay_whenUpdateDay_thenUpdateNameField() throws Exception {
         addDayToDatabase(20L, 1L);
 

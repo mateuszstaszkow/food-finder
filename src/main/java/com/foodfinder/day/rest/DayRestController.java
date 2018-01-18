@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -32,6 +33,7 @@ class DayRestController {
         return dayService.getDayList(pageable, date, from, to);
     }
 
+    @PreAuthorize("hasRole('VIEW_ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void addDay(@RequestBody DayDTO dayDTO) {
@@ -44,6 +46,7 @@ class DayRestController {
         return dayService.getDay(id);
     }
 
+    @PreAuthorize("hasRole('VIEW_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void updateDay(@PathVariable Long id, @RequestBody DayDTO dayDTO) {

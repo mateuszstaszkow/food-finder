@@ -1,5 +1,6 @@
 package com.foodfinder.day;
 
+import com.foodfinder.container.exceptions.service.ExceptionStasher;
 import com.foodfinder.day.domain.dto.DayDTO;
 import com.foodfinder.day.domain.dto.TimedDishDTO;
 import com.foodfinder.day.domain.entity.Day;
@@ -39,6 +40,9 @@ public class DayServiceTest {
     @MockBean
     private HitsService hitsService;
 
+    @MockBean
+    private ExceptionStasher exceptionStasher;
+
     private DayService dayService;
     private PageRequest defaultPageRequest;
     private Day day;
@@ -49,7 +53,7 @@ public class DayServiceTest {
 
     @Before
     public void setup() {
-        dayService = new DayService(dayRepository, dayMapper, hitsService);
+        dayService = new DayService(dayRepository, dayMapper, hitsService, exceptionStasher);
         defaultPageRequest = RestControllerTestUtils.getDefaultPageRequest();
 
         day = Day.builder()
