@@ -136,13 +136,12 @@ public class UserService {
         List<Day> userDay = userRepository.findUserDayByDateBetween(id, from, to);
 
         if(userDay.isEmpty()) {
-            dayService.postDay(dayDTO);
-            addDayToUser(id, dayDTO);
+            Day dayEntity = dayService.postDay(dayDTO);
+            addDayToUser(id, dayEntity);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
 
         dayService.updateDay(userDay.get(0).getId(), dayDTO);
-        addDayToUser(id, dayDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -173,23 +172,23 @@ public class UserService {
         return weightChanged || heightChanged || ageChanged || genderChanged;
     }
 
-    private void addDayToUser(Long id, DayDTO dayDTO) {
-        if(dayDTO == null || id == null) {
+    private void addDayToUser(Long id, Day day) {
+        if(day == null || id == null) {
             return;
         }
 
         User user = userRepository.getOne(id);
         Set<Day> days = user.getDays() == null ? new HashSet<>() : user.getDays();
-        Boolean dayNotExists = days.stream()
-                .filter(day -> DateUtils.isSameDay(dayDTO.getDate(), day.getDate()))
-                .collect(Collectors.toList())
-                .isEmpty();
-
-        if(dayNotExists) {
-            days.add(dayMapper.toEntity(dayDTO));
-            user.setDays(days);
-            userRepository.save(user);
-        }
+//        Boolean dayNotExists = days.stream()
+//                .filter(day -> DateUtils.isSameDay(dayDTO.getDate(), day.getDate()))
+//                .collect(Collectors.toList())
+//                .isEmpty();
+//
+//        if(dayNotExists) {
+        days.add(day);
+        user.setDays(days);
+        userRepository.save(user);
+//        }
     }
 
     private List<DayDTO> getDayList(Long id) {

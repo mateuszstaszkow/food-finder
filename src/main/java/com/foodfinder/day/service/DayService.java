@@ -50,7 +50,7 @@ public class DayService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public void postDay(DayDTO day) {
+    public Day postDay(DayDTO day) {
         Day dayEntity = Optional.ofNullable(day)
                 .map(dayMapper::toEntity)
                 .orElseThrow(BadRequestException::new);
@@ -58,7 +58,7 @@ public class DayService {
         dayEntity = hitsService.incrementHitsForANewDay(dayEntity);
 
         try {
-            dayRepository.save(dayEntity);
+            return dayRepository.saveAndFlush(dayEntity);
         } catch (Exception exception) {
             exceptionStasher.stash(exception, "Error during day save");
             throw new BadRequestException(exception);

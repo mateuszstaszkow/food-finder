@@ -1,6 +1,5 @@
 package com.foodfinder.food.service;
 
-import com.foodfinder.day.service.HitsService;
 import com.foodfinder.food.domain.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,6 @@ import java.util.stream.Collectors;
 public class FoodRecognitionService {
 
     private final FoodLiveSearchService liveSearchService;
-    private final HitsService hitsService;
 
     private static final int FEATURE_MAX_RESULTS = 5;
     private static final int MAX_FILE_SIZE = 128000;
@@ -48,9 +46,7 @@ public class FoodRecognitionService {
         String base64EncodedGraphic = encodeToBase64(file);
         GoogleVisionMainRequestDTO request = buildRequest(base64EncodedGraphic);
         List<GoogleVisionLabelAnnotationDTO> recognitionData = getRecognitionData(buildUri(), request);
-        ProductDTO recognizedProduct = findBestMatchingProduct(recognitionData);
-        //hitsService.incrementHitsAndSave(recognizedProduct);
-        return recognizedProduct;
+        return findBestMatchingProduct(recognitionData);
     }
 
     private String encodeToBase64(MultipartFile file) {
@@ -88,8 +84,8 @@ public class FoodRecognitionService {
     }
 
     private ProductDTO findBestMatchingProduct(List<GoogleVisionLabelAnnotationDTO> recognitionData) {
-        String productName = recognitionData.get(0)
-                .getDescription();
+        Boolean descriptionValid = !recognitionData.isEmpty() && ( recognitionData.get(0) != null );
+        String productName = descriptionValid ? recognitionData.get(0).getDescription() : NOT_FOUND_PRODUCT;
 
         if(isNameBanned(productName)) {
             return deeperMatching(recognitionData);
