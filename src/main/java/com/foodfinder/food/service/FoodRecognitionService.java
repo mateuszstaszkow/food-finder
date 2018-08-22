@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
@@ -15,16 +16,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.ws.rs.BadRequestException;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Transactional
 @Slf4j
+@PropertySource("/secrets.properties")
 public class FoodRecognitionService {
 
     private final FoodLiveSearchService liveSearchService;
@@ -43,10 +42,12 @@ public class FoodRecognitionService {
     private String GOOGLE_AUTH;
 
     public ProductDTO recognizeFood(MultipartFile file) {
-        String base64EncodedGraphic = encodeToBase64(file);
-        GoogleVisionMainRequestDTO request = buildRequest(base64EncodedGraphic);
-        List<GoogleVisionLabelAnnotationDTO> recognitionData = getRecognitionData(buildUri(), request);
-        return findBestMatchingProduct(recognitionData);
+        return Optional.ofNullable(file)
+                .map(this::encodeToBase64)
+                .map(this::buildRequest)
+                .map(this::getRecognitionData)
+                .map(this::findBestMatchingProduct) // TODO improve
+                .orElseThrow(BadRequestException::new);
     }
 
     private String encodeToBase64(MultipartFile file) {
@@ -61,11 +62,11 @@ public class FoodRecognitionService {
         }
     }
 
-    private List<GoogleVisionLabelAnnotationDTO> getRecognitionData(URI uri, GoogleVisionMainRequestDTO request) {
+    private List<GoogleVisionLabelAnnotationDTO> getRecognitionData(GoogleVisionMainRequestDTO request) {
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            return restTemplate.postForObject(uri, request, GoogleVisionMainResponseDTO.class)
+            return restTemplate.postForObject(buildUri(), request, GoogleVisionMainResponseDTO.class)
                     .getResponses()
                     .get(0)
                     .getLabelAnnotations();
