@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-@PropertySource("/secrets.properties")
+@PropertySource("classpath:secrets.properties")
 class FoodGroupsMigrator {
 
     private final MigrationMapper migrationMapper;

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Transactional
 @Slf4j
-@PropertySource("/secrets.properties")
+@PropertySource("classpath:secrets.properties")
 public class FoodRecognitionService {
 
     private final FoodLiveSearchService liveSearchService;

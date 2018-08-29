@@ -22,7 +22,7 @@ public class SmokeTest {
     private ApplicationContext context;
 
     @Test
-    public void contexLoads() throws Exception {
+    public void contextLoads() throws Exception {
         assertThat(application).isNotNull();
         assertThat(context).isNotNull();
     }

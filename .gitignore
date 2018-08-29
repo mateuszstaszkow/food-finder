@@ -26,4 +26,4 @@ hs_err_pid*
 
 exception.json
 
-src/main/java/resources/secrets.properties
+src/main/resources/secrets.properties

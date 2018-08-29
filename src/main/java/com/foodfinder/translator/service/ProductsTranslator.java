@@ -25,7 +25,7 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-@PropertySource("/secrets.properties")
+@PropertySource("classpath:secrets.properties")
 class ProductsTranslator implements Translator {
 
     private final ProductRepository productRepository;
