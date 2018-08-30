@@ -11,7 +11,10 @@
 .mtj.tmp/
 
 # IDE
+.gradle/
 .idea/
+build/
+out/
 
 # Package Files #
 *.jar
