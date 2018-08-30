@@ -13,7 +13,6 @@ import com.foodfinder.user.domain.entity.User;
 import com.foodfinder.user.domain.mapper.UserMapper;
 import com.foodfinder.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -136,13 +135,12 @@ public class UserService {
         List<Day> userDay = userRepository.findUserDayByDateBetween(id, from, to);
 
         if(userDay.isEmpty()) {
-            dayService.postDay(dayDTO);
-            addDayToUser(id, dayDTO);
+            Day dayEntity = dayService.postDay(dayDTO);
+            addDayToUser(id, dayEntity);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
 
         dayService.updateDay(userDay.get(0).getId(), dayDTO);
-        addDayToUser(id, dayDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -173,23 +171,20 @@ public class UserService {
         return weightChanged || heightChanged || ageChanged || genderChanged;
     }
 
-    private void addDayToUser(Long id, DayDTO dayDTO) {
-        if(dayDTO == null || id == null) {
+    private void addDayToUser(Long userId, Day newDay) {
+        if(newDay == null || userId == null) {
             return;
         }
+        Optional.ofNullable(userRepository.getOne(userId))
+                .map(dbUser -> appendDayToUser(dbUser, newDay))
+                .map(userRepository::save);
+    }
 
-        User user = userRepository.getOne(id);
-        Set<Day> days = user.getDays() == null ? new HashSet<>() : user.getDays();
-        Boolean dayNotExists = days.stream()
-                .filter(day -> DateUtils.isSameDay(dayDTO.getDate(), day.getDate()))
-                .collect(Collectors.toList())
-                .isEmpty();
-
-        if(dayNotExists) {
-            days.add(dayMapper.toEntity(dayDTO));
-            user.setDays(days);
-            userRepository.save(user);
-        }
+    private User appendDayToUser(User user, Day newDay) {
+        Set<Day> userDays = user.getDays();
+        userDays.add(newDay);
+        user.setDays(userDays);
+        return user;
     }
 
     private List<DayDTO> getDayList(Long id) {

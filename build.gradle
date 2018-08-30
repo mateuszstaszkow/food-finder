@@ -5,18 +5,22 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     }
 }
 
 plugins {
-    id 'net.ltgt.apt' version '0.8'
+    id 'net.ltgt.apt' version "0.8"
     id "org.flywaydb.flyway" version "5.0.3"
     id "com.github.lkishalmi.gatling" version "0.4.1"
-    id 'io.franzbecker.gradle-lombok' version '1.11'
+    id 'io.franzbecker.gradle-lombok' version "1.11"
     id 'java'
 }
 
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
@@ -24,7 +28,7 @@ apply plugin: 'scala'
 
 war {
     baseName = 'food-finder'
-    version = '1.0.0'
+    version = '1.1.0'
 }
 
 repositories {
@@ -36,41 +40,59 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    //Spring related
+    // Spring related
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
 
-    //Database configuration
+    // Database configuration
     compile("mysql:mysql-connector-java:${mysqlConnectorVersion}")
     compile("com.zaxxer:HikariCP:${hikariVersion}")
     compile("org.flywaydb:flyway-core:${flywayVersion}")
 
-    //Boilerplate generation
+    // Boilerplate generation
     compile("org.projectlombok:lombok:${lombokVersion}")
     compile("org.mapstruct:mapstruct-jdk8:${mapstructVersion}")
     apt("org.projectlombok:lombok:${lombokVersion}")
     apt("org.mapstruct:mapstruct-processor:${mapstructVersion}")
 
-    //RESTful
+    // RESTful
     compile("org.glassfish.jersey.core:jersey-common:${jerseyCommonVersion}")
     compile("org.springframework.hateoas:spring-hateoas:${springHateoasVersion}")
 
-    //Calculations
+    // Calculations
     compile("com.google.guava:guava:${guavaVersion}")
     compile("org.apache.commons:commons-lang3:${apacheCommonsVersion}")
 
-    //Documentation
+    // Documentation
     compile("io.springfox:springfox-swagger2:${swaggerVersion}")
     compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
     compile("javax.interceptor:javax.interceptor-api:${javaxInterceptorVersion}")
 
-    //Tests
+    // Tests
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     testCompile("org.springframework.security:spring-security-test:${springVersion}")
     testCompile("com.h2database:h2:${h2Version}")
     testCompile("com.github.tomakehurst:wiremock:${wiremockVersion}")
     compile("org.scala-lang:scala-library:${scalaVersion}")
+
+    // Kotlin
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonKotlinVersion}")
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
 }
 
 compileJava {
